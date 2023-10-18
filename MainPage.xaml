@@ -28,7 +28,7 @@
            EnableTouchEvents="True"
        
            BackgroundColor="Black"
-           IgnorePixelScaling="False">
+           IgnorePixelScaling="True">
 
         </skiae:SKCanvasView>
     </Grid>
