@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AustralianFall.MainPage"
+             xmlns:skiae="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls">
+             
+             
+
+    <Grid
+        x:Name="grid"
+        BackgroundColor="Black"
+        
+        >
+        <Grid.GestureRecognizers>
+            <PanGestureRecognizer
+                >
+            </PanGestureRecognizer>
+        </Grid.GestureRecognizers>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <skiae:SKCanvasView
+
+                    
+            
+            x:Name="squir"
+            Touch="squir_Touch"
+            EnableTouchEvents="True"
+            
+            BackgroundColor="Black"
+            IgnorePixelScaling="True"
+            SizeChanged="squir_SizeChanged">
+
+        </skiae:SKCanvasView>
+    </Grid>
+</ContentPage>
+
