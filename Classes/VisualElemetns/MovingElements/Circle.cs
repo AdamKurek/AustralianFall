@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AustralianFall
+namespace AustralianFall.Classes.VisualElemetns.MovingElements
 {
     internal class Circle : IDisplayable
     {
@@ -21,7 +21,7 @@ namespace AustralianFall
 
         protected override void DrawMainShape(SKCanvas canvas)
         {
-            canvas.DrawOval(scaledX,scaledY,scaledRadiusX,scaledRadiusY,new SKPaint() { Color = SKColors.AliceBlue});
+            canvas.DrawOval(scaledX, scaledY, scaledRadiusX, scaledRadiusY, new SKPaint() { Color = SKColors.AliceBlue });
         }
     }
 }

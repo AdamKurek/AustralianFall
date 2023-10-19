@@ -57,4 +57,9 @@
 		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.6" />
 	</ItemGroup>
 
+
+	<ItemGroup>
+	  <Folder Include="Classes\VisualElemetns\StaticVisuals\Backgrounds\" />
+	</ItemGroup>
+
 </Project>
