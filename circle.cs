@@ -22,7 +22,6 @@ namespace AustralianFall
         protected override void DrawMainShape(SKCanvas canvas)
         {
             canvas.DrawOval(scaledX,scaledY,scaledRadiusX,scaledRadiusY,new SKPaint() { Color = SKColors.AliceBlue});
-        //    canvas.DrawCircle(scaledX, scaledY, 200, new SKPaint());
         }
     }
 }

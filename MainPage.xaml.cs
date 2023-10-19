@@ -1,4 +1,6 @@
-﻿using SkiaSharp;
+﻿using AustralianFall.Classes;
+using AustralianFall.Interfaces;
+using SkiaSharp;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
 
@@ -18,36 +20,21 @@ namespace AustralianFall
 
         private void SizeChanged(object sender, EventArgs e)
         {
-            c.Resize((float)PaintSurface.Width, (float)PaintSurface.Height);    
+            //c.Resize((float)PaintSurface.Width, (float)PaintSurface.Height);
+            IDisplayable.canvasWidth = (float)PaintSurface.Width;
+            IDisplayable.canvasHeight = (float)PaintSurface.Height;
         }
         private async void OnPaintAsync(object sender, SkiaSharp.Views.Maui.SKPaintSurfaceEventArgs e)
         {
             var canvas = e.Surface.Canvas;
             canvas.Clear();
             c.Draw(canvas);
-
-            //svg.Load("fallingGuy.svg");
-
-            // Draw the SVG document to the canvas
-            //new SKFileStream("FallinGuyLogo")
             string resourceID = "fallin.png";
-            var jdStream = FileSystem.Current.OpenAppPackageFileAsync(resourceID).Result;
-            var data = SKData.Create(jdStream);
-            var bitmap = SKBitmap.Decode(data);
-
+            var bitmap = await ImageLoader.LoadBitmapAsync(resourceID);
             // Or create an SKImage from the stream
            // var image = SKImage.FromEncodedData(data);
-            if(bitmap.DrawsNothing)
-            {
-                bitmap.Dispose();
-            }
-            try { 
-                canvas.DrawBitmap(bitmap,new SKPoint(1,1));
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            
+            canvas.DrawBitmap(bitmap,new SKPoint(1,1));
             bitmap.Dispose();
 
             //canvas.DrawImage(image, new SKPoint(0, 0));

@@ -13,8 +13,8 @@ namespace AustralianFall.Interfaces
 
         static internal float defaultCanvasWidth = 1000;
         static internal float defaultCanvasHeight = 1000;
-        internal float canvasWidth = 1000;
-        internal float canvasHeight = 1000;
+        internal static float canvasWidth = 1000;
+        internal static float canvasHeight = 1000;
 
         protected float scaleX => (canvasWidth / defaultCanvasWidth);
 
@@ -24,8 +24,8 @@ namespace AustralianFall.Interfaces
             if (Width <= 0 || Height <= 0)
                 return;
             ResizePrecize(Width, Height);
-            canvasWidth = Width;
-            canvasHeight = Height;
+           // canvasWidth = Width;
+           // canvasHeight = Height;
         }
         protected virtual void ResizePrecize(float Width, float Height) { }
 
