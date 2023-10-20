@@ -2,8 +2,10 @@
 using AustralianFall.Classes.VisualElemetns;
 using AustralianFall.Classes.VisualElemetns.MovingElements;
 using AustralianFall.Interfaces;
+using Microsoft.Maui.Platform;
 using SkiaSharp;
 using System.Timers;
+
 #if WINDOWS
 using System.Windows.Input;
 using Windows.ApplicationModel.Core;
@@ -40,9 +42,9 @@ namespace AustralianFall
             currentScreen = new();
 
 
-
-
-
+            //BacgroundGrid.Handler
+            
+            
 
 #if WINDOWSxd
 
@@ -129,6 +131,7 @@ namespace AustralianFall
 
             if (australian.Alive)
             {
+
 #if WINDOWS
                 if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.Right))
                 {
@@ -156,7 +159,6 @@ namespace AustralianFall
             ///var xd = currentScreen.getCanvas;
             australian.Draw(canvas);
             //canvas.Restore();
-
             currentlyDrawing = false;
         }
         private void OnGameLoopTimerElapsed(object sender, ElapsedEventArgs e)

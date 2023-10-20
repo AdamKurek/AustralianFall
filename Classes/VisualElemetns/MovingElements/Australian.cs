@@ -11,9 +11,9 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
     internal class Australian : IDisplayable, IMovable
     {
 
-        SKBitmap bitmap;
+        private SKBitmap bitmap;
 
-        public Australian(SKBitmap b)
+        internal Australian(SKBitmap b)
         {
             var info = new SKImageInfo() { Width = 100, Height = 100, ColorSpace = b.ColorSpace };
             bitmap = new SKBitmap(100,100);
@@ -22,8 +22,8 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
             //bitmap.Resize()
         }
 
-        public float xSpeed = 0f;
-        public float ySpeed = -5f;
+        internal float xSpeed = 0f;
+        internal float ySpeed = -5f;
 
         public float x { get; set; } = 450f;
         public float y { get; set; } = 900f;
