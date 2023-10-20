@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
-using Windows.ApplicationModel.Chat;
-using Windows.Media.Core;
+﻿using System.Timers;
 using Timer = System.Timers.Timer;
 
 namespace AustralianFall.Classes.Services
@@ -17,7 +10,7 @@ namespace AustralianFall.Classes.Services
 
         public GameLoop()
         {
-            timer = new Timer(1000 / 60); // Update game 60 times per second
+            timer = new Timer(1000f / 60f); // Update game 60 times per second
             timer.Elapsed += OnTimerElapsed;
         }
         public void Start()

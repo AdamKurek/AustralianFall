@@ -1,9 +1,4 @@
 ﻿using SkiaSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AustralianFall.Interfaces
 {
@@ -15,9 +10,7 @@ namespace AustralianFall.Interfaces
         static internal float defaultCanvasHeight = 1000;
         internal static float canvasWidth = 1000;
         internal static float canvasHeight = 1000;
-
         protected float scaleX => (canvasWidth / defaultCanvasWidth);
-
         protected float scaleY => (canvasHeight / (defaultCanvasHeight));
         internal void Resize(float Width, float Height)
         {
@@ -28,7 +21,6 @@ namespace AustralianFall.Interfaces
            // canvasHeight = Height;
         }
         protected virtual void ResizePrecize(float Width, float Height) { }
-
         internal void Draw(SKCanvas canvas)
         {
             DrawMainShape(canvas);

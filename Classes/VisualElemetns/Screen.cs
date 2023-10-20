@@ -1,11 +1,6 @@
 ﻿using AustralianFall.Classes.VisualElemetns.MovingElements;
 using AustralianFall.Interfaces;
 using SkiaSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace AustralianFall.Classes.VisualElemetns
@@ -18,13 +13,23 @@ namespace AustralianFall.Classes.VisualElemetns
         internal Australian australian;
 
         private SKCanvas staticCanvas;
-        Screen()
+        internal SKCanvas getCanvas { get {
+                staticCanvas.Save();
+                return staticCanvas; 
+            } 
+        }
+            
+        internal Screen()
         {
             //staticCanvas;
         }
         private void OnGameLoopTimerElapsed(object sender, ElapsedEventArgs e)
         {
-            // Your event handling logic here
+            staticCanvas.Restore();
+            foreach (var movableElement in movableElements)
+            {
+                movableElement.updatePosition();
+            }
         }
 
     }
