@@ -5,15 +5,9 @@ using AustralianFall.Interfaces;
 using Microsoft.Maui.Platform;
 using SkiaSharp;
 using System.Timers;
-
-#if WINDOWS
-using System.Windows.Input;
-using Windows.ApplicationModel.Core;
-using Windows.System;
-using Windows.UI.Core;
-using Dapplo.Windows.Input.Keyboard;
-using Dapplo.Windows.Input.Enums;
+#if ANDROID
 #endif
+
 namespace AustralianFall
 {
     public partial class MainPage : ContentPage
@@ -24,6 +18,7 @@ namespace AustralianFall
         bool currentlyDrawing = false;
         Screen currentScreen;
         SKPaint paint;
+        MovementControl controller;
         public MainPage()
         {
             InitializeComponent();
@@ -33,81 +28,79 @@ namespace AustralianFall
             australian = new(bitmap);
             PaintSurface.PaintSurface += OnPaintAsync;
             PaintSurface.SizeChanged += SizeChanged;
+           // PaintSurface.Touch += touch;
             PaintSurface.EnableTouchEvents = true;
-            PaintSurface.Touch += touch;
+            TapGestureRecognizer rec = new TapGestureRecognizer();
+            controller = new(australian);
+
             clockerTicker = new GameLoop();
-            
+
             clockerTicker.TimerElapsed += OnGameLoopTimerElapsed;
             clockerTicker.Start();
             currentScreen = new();
 
+#if ANDROID || IOS
 
-            //BacgroundGrid.Handler
-            
-            
-
-#if WINDOWSxd
-
-            var keyboardHook = KeyboardHook.KeyboardEvents;
-
-            keyboardHook.Subscribe(combination =>
+            var leftButton = new Button
             {
-                if (combination.Key == VirtualKeyCode.Right)
-                {
-                    australian.xSpeed = 5f;
-                }
-                else if (combination.Key == VirtualKeyCode.Left)
-                {
-                    australian.xSpeed = -5f;
-                }
-                else australian.xSpeed = 0;
-                   
-             });
+                Opacity = 0.0,
+                BackgroundColor = Colors.Green,
+                
+            };
+            leftButton.Pressed += LeftTap;
+            leftButton.Released += LeftRelease;
 
-
-            //keyboardHook.
-            // Start observing
+            var rightButton = new Button{
+                Opacity = 0,
+                BackgroundColor = Colors.Transparent
+            };
             
-            // var keyboardObserver = new KeyboardObserver();
-            //            SIL.Keyboarding.Keyboard.Controller;
+            rightButton.Pressed += RightTap;
+            rightButton.Released += RightRelease;
+
+            BackgroundGrid.Add(leftButton,0,0);
+            BackgroundGrid.Add(rightButton, 1, 0);
+
 #endif
+
+
         }
+#if ANDROID || IOS
+
+        private void LeftRelease(object sender, EventArgs e)
+        {
+            controller.CurrentKeyHeld = MovementControl.keyHeld.none;
+        }
+        private void LeftTap(object sender, EventArgs e)
+        {
+            controller.CurrentKeyHeld = MovementControl.keyHeld.left;
+        }
+        private void RightRelease(object sender, EventArgs e)
+        {
+            controller.CurrentKeyHeld = MovementControl.keyHeld.none;
+        }
+        private void RightTap(object sender, EventArgs e)
+        {
+            controller.CurrentKeyHeld = MovementControl.keyHeld.right;
+            
+        }
+
+   
+#endif
+
 
         protected override void OnAppearing() {
             base.OnAppearing();
             australian.Alive = true;
-            //Task.Run(() => gameLoaded());
         }
 
-        private void keyDown() {
-        //    if(args.VirtualKey == VirtualKey.Right)
-        //    {
-        //        australian.xSpeed = 5f;
-        //    }
-        //    else if(args.VirtualKey == VirtualKey.Left)
-        //    {
-        //        australian.xSpeed = -5f;
-        //    }
-        //    else
-        //    {
-        //        australian.xSpeed = 0f;
-        //    }
-
-        }
-
-        private void touch(object sender, SkiaSharp.Views.Maui.SKTouchEventArgs e)
+        protected override void OnDisappearing()
         {
-
-
-            if (e.Location.X > IDisplayable.canvasWidth)
-            {
-                australian.xSpeed = -5;
-            }
-            else
-            {
-            }
+            base.OnDisappearing();
+            clockerTicker.Stop();
         }
 
+ 
         private async Task gameLoaded()
         {
          //   base.
@@ -121,54 +114,39 @@ namespace AustralianFall
             IDisplayable.canvasWidth = (float)PaintSurface.Width;
             IDisplayable.canvasHeight = (float)PaintSurface.Height;
         }
-        private async void OnPaintAsync(object sender, SkiaSharp.Views.Maui.SKPaintSurfaceEventArgs e)
+        int frames = 0;
+        int frames2 = 0;
+        private void OnPaintAsync(object sender, SkiaSharp.Views.Maui.SKPaintSurfaceEventArgs e)
         {
-
-
+            frames++;
 
             if (currentlyDrawing) { return; }
-
-
-            if (australian.Alive)
-            {
-
 #if WINDOWS
-                if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.Right))
-                {
-                    australian.xSpeed = 5f;
-                }
-                else if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.Left))
-                {
-                    australian.xSpeed = -5f;
-                }
-                else
-                {
-                    australian.xSpeed = 0f;
-                }
+            controller.tick();
 #endif
-            }
+            frames2++;
 
-
-            currentlyDrawing = true;
            
-            //PaintSurface.InvalidateSurface();
-            //canvas = currentScreen.getCanvas;
+            currentlyDrawing = true;
             var canvas = e.Surface.Canvas;
             canvas.Clear();
-            //canvas.Save();
-            ///var xd = currentScreen.getCanvas;
             australian.Draw(canvas);
-            //canvas.Restore();
             currentlyDrawing = false;
         }
         private void OnGameLoopTimerElapsed(object sender, ElapsedEventArgs e)
         {
-           
+#if ANDROID || IOS
+            controller.tick();
+#endif
+            australian.updatePosition();
+            // try { 
 
-           australian.updatePosition();
-            try { 
-                PaintSurface?.InvalidateSurface();
-            }catch (Exception ex) {; }
+            Dispatcher.Dispatch(() =>
+            {
+                PaintSurface.InvalidateSurface();
+            });
+           // .InvalidateSurface();
+            //catch (Exception ex) {; }
 
         }
     }

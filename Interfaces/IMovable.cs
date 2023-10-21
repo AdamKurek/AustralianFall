@@ -6,7 +6,6 @@ namespace AustralianFall.Interfaces
     {
         float x { get; set; }
         float y { get; set; }
-
         void updatePosition();
     }
 }

@@ -7,7 +7,7 @@
              
 
     <Grid
-        x:Name="BacgroundGrid"
+        x:Name="BackgroundGrid"
         BackgroundColor="Black"
         
         >
@@ -17,6 +17,7 @@
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -28,7 +29,9 @@
            EnableTouchEvents="True"
        
            BackgroundColor="Black"
-           IgnorePixelScaling="True">
+           IgnorePixelScaling="True"
+           Grid.ColumnSpan="2"
+            >
 
         </skiae:SKCanvasView>
     </Grid>

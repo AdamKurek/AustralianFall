@@ -1,4 +1,5 @@
-﻿using AustralianFall.Interfaces;
+﻿using AustralianFall.Classes.Services;
+using AustralianFall.Interfaces;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,11 @@ using System.Threading.Tasks;
 
 namespace AustralianFall.Classes.VisualElemetns.MovingElements
 {
-    internal class Australian : IDisplayable, IMovable
+    internal class Australian : IDisplayable, IMovable, IPossessable
     {
 
         private SKBitmap bitmap;
+
 
         internal Australian(SKBitmap b)
         {
@@ -39,6 +41,40 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
             x += xSpeed;
             y += ySpeed;
             if(y<0) y += 1000;
+            if (x < 0) x += 1000;
+            if (x > 1000) x += -1000;
+
+        }
+
+        public void Tick(MovementControl.keyHeld direction)
+        {
+            switch (direction)
+            {
+                case MovementControl.keyHeld.right:{
+                        if (xSpeed < 5){
+                            xSpeed += 2.5f;
+                        }
+                        return;
+                    }
+                case MovementControl.keyHeld.left:{
+                        if (xSpeed > -5){
+                            xSpeed -= 2.5f;
+                        }
+                        return;
+                    }
+                default:{
+                        if (xSpeed == 0f){
+                            return;
+                        }
+                        if (xSpeed > 0f){
+                            xSpeed -= 2.5f;
+                        }
+                        else{
+                            xSpeed += 2.5f;
+                        }
+                        return;
+                    }
+            }
         }
     }
 }
