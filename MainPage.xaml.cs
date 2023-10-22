@@ -67,23 +67,29 @@ namespace AustralianFall
         }
 #if ANDROID || IOS
 
-        private void LeftRelease(object sender, EventArgs e)
-        {
-            controller.CurrentKeyHeld = MovementControl.keyHeld.none;
-        }
+      
         private void LeftTap(object sender, EventArgs e)
         {
             controller.CurrentKeyHeld = MovementControl.keyHeld.left;
         }
-        private void RightRelease(object sender, EventArgs e)
+        private void LeftRelease(object sender, EventArgs e)
         {
-            controller.CurrentKeyHeld = MovementControl.keyHeld.none;
+            if(controller.CurrentKeyHeld == MovementControl.keyHeld.left){
+                controller.CurrentKeyHeld = MovementControl.keyHeld.none;
+            }
         }
+
         private void RightTap(object sender, EventArgs e)
         {
             controller.CurrentKeyHeld = MovementControl.keyHeld.right;
-            
         }
+        private void RightRelease(object sender, EventArgs e)
+        {
+            if(controller.CurrentKeyHeld == MovementControl.keyHeld.right){
+                controller.CurrentKeyHeld = MovementControl.keyHeld.none;
+            }
+        }
+        
 
    
 #endif
