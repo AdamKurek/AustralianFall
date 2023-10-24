@@ -8,24 +8,24 @@ namespace AustralianFall.Classes.VisualElemetns
     internal class Screen
     {
         internal List<IMovable> movableElements;
-        internal List<IDisplayable> staticTraps;
-        //internal Background background;
+        internal List<IDisplayable> staticElements;
+        internal ILevelAssets levelAssets;
         internal Australian australian;
 
-        private SKCanvas staticCanvas;
-        internal SKCanvas getCanvas { get {
-                staticCanvas.Save();
-                return staticCanvas; 
+        private SKBitmap staticBitmap;
+        internal SKBitmap getCanvas { get {
+                return staticBitmap; 
             } 
         }
             
-        internal Screen()
+        internal Screen(int level)
         {
-            //staticCanvas;
+
+            //Type type = Type.GetType("Namespace.ClassName");
+            //object instance = Activator.CreateInstance(type);
         }
         private void OnGameLoopTimerElapsed(object sender, ElapsedEventArgs e)
         {
-            staticCanvas.Restore();
             foreach (var movableElement in movableElements)
             {
                 movableElement.updatePosition();

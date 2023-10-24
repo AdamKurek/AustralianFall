@@ -44,10 +44,14 @@
 		<MauiFont Include="Resources\Fonts\*" />
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+		<MauiAsset Include="Resources\Raw\RawImages\**" />
+
 	</ItemGroup>
 
 	<ItemGroup>
 	  <None Remove="Resources\Raw\maluch.png" />
+	  <None Remove="Resources\Raw\RawImages\Backgrounds\Background1.jpg" />
+	  <None Remove="Resources\Raw\RawImages\Entities\window.jpg" />
 	</ItemGroup>
 
 

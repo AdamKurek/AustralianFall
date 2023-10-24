@@ -15,11 +15,11 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         private SKBitmap bitmap;
 
 
-        internal Australian(SKBitmap b)
-        {
-            var info = new SKImageInfo() { Width = 100, Height = 100, ColorSpace = b.ColorSpace };
-            bitmap = new SKBitmap(100,100);
+        internal Australian(SKBitmap b){
+            var info = new SKImageInfo() { Width = 50, Height = 50, ColorSpace = b.ColorSpace };
+            bitmap = new SKBitmap(50, 50);
             b.ScalePixels(bitmap, SKFilterQuality.None);
+            Rect.Location = new(475, 1000);
             //bitmap.Info = info;
             //bitmap.Resize()
         }
@@ -27,53 +27,50 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         internal float xSpeed = 0f;
         internal float ySpeed = -5f;
 
-        public float x { get; set; } = 450f;
-        public float y { get; set; } = 900f;
+        public float x => Rect.Location.X;
+        public float y => Rect.Location.Y;
+
         public bool Alive { get; internal set; } = false;
 
-        protected override void DrawMainShape(SKCanvas canvas)
-        {
+        protected override void DrawMainShape(SKCanvas canvas){
             canvas.DrawBitmap(bitmap, x * scaleX, y * scaleY);
         }
 
-        public void updatePosition()
-        {
-            x += xSpeed;
-            y += ySpeed;
-            if(y<0) y += 1000;
-            if (x < 0) x += 1000;
-            if (x > 1000) x += -1000;
-
+        internal event EventHandler ChangeScreen;
+        public void updatePosition(){
+            Rect.Offset(xSpeed, ySpeed);
+            if (y < 0){
+                Rect.Offset(0, 1000f);
+                ChangeScreen.Invoke(this, new EventArgs());
+            }
         }
 
-        public void Tick(MovementControl.keyHeld direction)
-        {
-            switch (direction)
-            {
+        public void Tick(MovementControl.keyHeld direction) {
+            switch (direction){
                 case MovementControl.keyHeld.right:{
-                        if (xSpeed < 5){
-                            xSpeed += 2.5f;
-                        }
-                        return;
+                    if (xSpeed < 5){
+                        xSpeed += 2.5f;
                     }
+                    return;
+                }
                 case MovementControl.keyHeld.left:{
-                        if (xSpeed > -5){
-                            xSpeed -= 2.5f;
-                        }
-                        return;
+                    if (xSpeed > -5){
+                        xSpeed -= 2.5f;
                     }
+                    return;
+                }
                 default:{
-                        if (xSpeed == 0f){
-                            return;
-                        }
-                        if (xSpeed > 0f){
-                            xSpeed -= 2.5f;
-                        }
-                        else{
-                            xSpeed += 2.5f;
-                        }
+                    if (xSpeed == 0f){
                         return;
                     }
+                    if (xSpeed > 0f){
+                        xSpeed -= 2.5f;
+                    }
+                    else{
+                        xSpeed += 2.5f;
+                    }
+                    return;
+                }
             }
         }
     }

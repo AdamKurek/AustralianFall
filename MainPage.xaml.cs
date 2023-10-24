@@ -17,27 +17,29 @@ namespace AustralianFall
         GameLoop clockerTicker;
         bool currentlyDrawing = false;
         Screen currentScreen;
+        Screen nextScreen;
         SKPaint paint;
         MovementControl controller;
+        int screenIndex = 0;
         public MainPage()
         {
             InitializeComponent();
-            string resourceID = "fallin.png";
-            //var bitmap = await ImageLoader.LoadBitmapAsync(resourceID);
+            string resourceID = "RawImages/Entities/fallin.jpg";
             var bitmap = ImageLoader.LoadBitmap(resourceID).Result;
             australian = new(bitmap);
+            australian.ChangeScreen += ChangeScreen;
             PaintSurface.PaintSurface += OnPaintAsync;
             PaintSurface.SizeChanged += SizeChanged;
-           // PaintSurface.Touch += touch;
             PaintSurface.EnableTouchEvents = true;
             TapGestureRecognizer rec = new TapGestureRecognizer();
             controller = new(australian);
-
             clockerTicker = new GameLoop();
-
             clockerTicker.TimerElapsed += OnGameLoopTimerElapsed;
             clockerTicker.Start();
-            currentScreen = new();
+            currentScreen = new(screenIndex++);
+            nextScreen = new(screenIndex++);
+            //SkiaSharp.Views.Maui.Controls.SKGLView ciew = new SkiaSharp.Views.Maui.Controls.SKGLView();
+            //ciew.PaintSurface += onPaintskg;
 
 #if ANDROID || IOS
 
@@ -62,12 +64,17 @@ namespace AustralianFall
             BackgroundGrid.Add(rightButton, 1, 0);
 
 #endif
-
-
         }
-#if ANDROID || IOS
 
       
+
+        private void ChangeScreen(object sender, EventArgs e)
+        {
+            currentScreen = nextScreen;
+            nextScreen = new Screen(screenIndex++);   
+        }
+
+#if ANDROID || IOS
         private void LeftTap(object sender, EventArgs e)
         {
             controller.CurrentKeyHeld = MovementControl.keyHeld.left;
@@ -78,7 +85,6 @@ namespace AustralianFall
                 controller.CurrentKeyHeld = MovementControl.keyHeld.none;
             }
         }
-
         private void RightTap(object sender, EventArgs e)
         {
             controller.CurrentKeyHeld = MovementControl.keyHeld.right;
@@ -89,11 +95,7 @@ namespace AustralianFall
                 controller.CurrentKeyHeld = MovementControl.keyHeld.none;
             }
         }
-        
-
-   
 #endif
-
 
         protected override void OnAppearing() {
             base.OnAppearing();
@@ -105,7 +107,6 @@ namespace AustralianFall
             base.OnDisappearing();
             clockerTicker.Stop();
         }
-
  
         private async Task gameLoaded()
         {
@@ -120,22 +121,18 @@ namespace AustralianFall
             IDisplayable.canvasWidth = (float)PaintSurface.Width;
             IDisplayable.canvasHeight = (float)PaintSurface.Height;
         }
-        int frames = 0;
-        int frames2 = 0;
+
         private void OnPaintAsync(object sender, SkiaSharp.Views.Maui.SKPaintSurfaceEventArgs e)
         {
-            frames++;
-
             if (currentlyDrawing) { return; }
 #if WINDOWS
             controller.tick();
 #endif
-            frames2++;
-
-           
             currentlyDrawing = true;
             var canvas = e.Surface.Canvas;
             canvas.Clear();
+
+            e.Surface.Canvas.DrawBitmap(currentScreen.getCanvas,0f,0f);
             australian.Draw(canvas);
             currentlyDrawing = false;
         }
@@ -145,15 +142,7 @@ namespace AustralianFall
             controller.tick();
 #endif
             australian.updatePosition();
-            // try { 
-
-            Dispatcher.Dispatch(() =>
-            {
-                PaintSurface.InvalidateSurface();
-            });
-           // .InvalidateSurface();
-            //catch (Exception ex) {; }
-
+            Dispatcher.Dispatch(PaintSurface.InvalidateSurface);
         }
     }
 }

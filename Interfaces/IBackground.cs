@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SkiaSharp;
 
 namespace AustralianFall.Interfaces
 {
-    internal class IBackground
+    internal abstract class ILevelAssets
     {
+        internal abstract SKBitmap LoadBackground();
+        internal abstract List<SKBitmap> LoadBackgroundElements();
+        internal abstract List<List<SKBitmap>> LoadMovingElements();
 
     }
 }
