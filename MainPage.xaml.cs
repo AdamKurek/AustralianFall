@@ -24,7 +24,7 @@ namespace AustralianFall
         public MainPage()
         {
             InitializeComponent();
-            string resourceID = "RawImages/Entities/fallin.jpg";
+            string resourceID = "RawImages/Entities/fallin.png";
             var bitmap = ImageLoader.LoadBitmap(resourceID).Result;
             australian = new(bitmap);
             australian.ChangeScreen += ChangeScreen;
@@ -37,6 +37,7 @@ namespace AustralianFall
             clockerTicker.TimerElapsed += OnGameLoopTimerElapsed;
             clockerTicker.Start();
             currentScreen = new(screenIndex++);
+
             nextScreen = new(screenIndex++);
             //SkiaSharp.Views.Maui.Controls.SKGLView ciew = new SkiaSharp.Views.Maui.Controls.SKGLView();
             //ciew.PaintSurface += onPaintskg;
@@ -132,7 +133,8 @@ namespace AustralianFall
             var canvas = e.Surface.Canvas;
             canvas.Clear();
 
-            e.Surface.Canvas.DrawBitmap(currentScreen.getCanvas,0f,0f);
+            e.Surface.Canvas.DrawBitmap(currentScreen.getBackgroundWithTraps,0f,0f);
+            currentScreen.DrawTraps(canvas);
             australian.Draw(canvas);
             currentlyDrawing = false;
         }

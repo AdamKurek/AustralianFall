@@ -6,7 +6,7 @@ namespace AustralianFall.Interfaces
     {
         internal abstract SKBitmap LoadBackground();
         internal abstract List<SKBitmap> LoadBackgroundElements();
-        internal abstract List<List<SKBitmap>> LoadMovingElements();
+        internal abstract List<ITrap> LoadMovingElements();
 
     }
 }

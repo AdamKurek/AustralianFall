@@ -12,7 +12,8 @@ namespace AustralianFall.Interfaces
         internal static float canvasHeight = 1000;
         protected float scaleX => (canvasWidth / defaultCanvasWidth);
         protected float scaleY => (canvasHeight / (defaultCanvasHeight));
-        protected SKRect Rect;
+        protected SKRect DrawingRect;// 
+        protected SKBitmap Bitmap { get; set; }
         internal void Resize(float Width, float Height)
         {
             if (Width <= 0 || Height <= 0)
@@ -27,6 +28,8 @@ namespace AustralianFall.Interfaces
             DrawMainShape(canvas);
         }
         protected abstract void DrawMainShape(SKCanvas canvas);
+
+        
 
         internal class Hitbox
         {

@@ -11,15 +11,11 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
 {
     internal class Australian : IDisplayable, IMovable, IPossessable
     {
-
-        private SKBitmap bitmap;
-
-
         internal Australian(SKBitmap b){
             var info = new SKImageInfo() { Width = 50, Height = 50, ColorSpace = b.ColorSpace };
-            bitmap = new SKBitmap(50, 50);
-            b.ScalePixels(bitmap, SKFilterQuality.None);
-            Rect.Location = new(475, 1000);
+            Bitmap = new SKBitmap(50, 50);
+            b.ScalePixels(Bitmap, SKFilterQuality.None);
+            DrawingRect.Location = new(475, 1000);
             //bitmap.Info = info;
             //bitmap.Resize()
         }
@@ -27,20 +23,20 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         internal float xSpeed = 0f;
         internal float ySpeed = -5f;
 
-        public float x => Rect.Location.X;
-        public float y => Rect.Location.Y;
+        public float x => DrawingRect.Location.X;
+        public float y => DrawingRect.Location.Y;
 
         public bool Alive { get; internal set; } = false;
 
         protected override void DrawMainShape(SKCanvas canvas){
-            canvas.DrawBitmap(bitmap, x * scaleX, y * scaleY);
+            canvas.DrawBitmap(Bitmap, x * scaleX, y * scaleY);
         }
 
         internal event EventHandler ChangeScreen;
         public void updatePosition(){
-            Rect.Offset(xSpeed, ySpeed);
+            DrawingRect.Offset(xSpeed, ySpeed);
             if (y < 0){
-                Rect.Offset(0, 1000f);
+                DrawingRect.Offset(0, 1000f);
                 ChangeScreen.Invoke(this, new EventArgs());
             }
         }
