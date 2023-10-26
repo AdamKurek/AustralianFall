@@ -23,19 +23,19 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         internal float xSpeed = 0f;
         internal float ySpeed = -5f;
 
-        public float x => DrawingRect.Location.X;
-        public float y => DrawingRect.Location.Y;
+        public float X => DrawingRect.Location.X;
+        public float Y => DrawingRect.Location.Y;
 
         public bool Alive { get; internal set; } = false;
 
         protected override void DrawMainShape(SKCanvas canvas){
-            canvas.DrawBitmap(Bitmap, x * scaleX, y * scaleY);
+            canvas.DrawBitmap(Bitmap, X * scaleX, Y * scaleY);
         }
 
         internal event EventHandler ChangeScreen;
         public void updatePosition(){
             DrawingRect.Offset(xSpeed, ySpeed);
-            if (y < 0){
+            if (Y < 0){
                 DrawingRect.Offset(0, 1000f);
                 ChangeScreen.Invoke(this, new EventArgs());
             }

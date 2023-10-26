@@ -26,5 +26,10 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
         {
             return new List<ITrap>();
         }
+
+        internal override void loadTextures()
+        {
+
+        }
     }
 }

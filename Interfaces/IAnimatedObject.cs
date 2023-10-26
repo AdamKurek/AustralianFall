@@ -2,16 +2,12 @@
 
 namespace AustralianFall.Interfaces
 {
-    internal abstract class IAnimatedObject
-        
-        
-        :ITrap
+    internal abstract class IAnimatedObject:ITrap
     {
         public int States { get; protected set; }
-
-
         SKBitmap[] animationFrames;
         readonly Hitbox[] hitboxFrames;
+
 
     }
 }

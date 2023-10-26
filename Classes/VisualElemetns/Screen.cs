@@ -44,17 +44,19 @@ namespace AustralianFall.Classes.VisualElemetns
           
             {
                 staticBitmap = levelAssets.LoadBackground();
-                resize();
+                levelAssets.loadTextures();
                 Traps = levelAssets.LoadMovingElements();
             }
+
+
 
 
         }
         private void OnGameLoopTimerElapsed(object sender, ElapsedEventArgs e)
         {
-           // foreach (var movableElement in movableElements)
+            foreach (IMovable movableElement  in Traps)
             {
-              //  movableElement.updatePosition();
+                movableElement.updatePosition();
             }
         }
 
