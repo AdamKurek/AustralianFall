@@ -14,13 +14,20 @@ namespace AustralianFall.Classes.VisualElemetns
         internal ILevelAssets levelAssets;
         internal Australian australian;
 
-        private SKBitmap staticBitmap = new SKBitmap();
+        private SKBitmap staticBitmap;
         internal SKBitmap getBackgroundWithTraps { get {
                 return staticBitmap;
             } 
         }
             
-        internal Screen(int level)
+        internal void resize()
+        {
+            var info = staticBitmap.Info;
+            info.Width = (int)IDisplayable.canvasWidth;
+            info.Height = (int)IDisplayable.canvasHeight;
+            staticBitmap = staticBitmap.Resize(info, SKFilterQuality.High);
+        }
+        internal Screen(int level)//todo make it async loading in background
         {
 
             //Type type = Type.GetType("AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds.Map1");
@@ -36,8 +43,9 @@ namespace AustralianFall.Classes.VisualElemetns
             
           
             {
-                 staticBitmap = levelAssets.LoadBackground();
-                 Traps = levelAssets.LoadMovingElements();
+                staticBitmap = levelAssets.LoadBackground();
+                resize();
+                Traps = levelAssets.LoadMovingElements();
             }
 
 
