@@ -10,10 +10,7 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
             DrawingRect = Rect;
         }
 
-        protected override void DrawMainShape(SKCanvas canvas)
-        {
-            canvas.DrawBitmap(Bitmap,DrawingRect);
-        }
+       
 
         protected override SKBitmap Bitmap 
         {

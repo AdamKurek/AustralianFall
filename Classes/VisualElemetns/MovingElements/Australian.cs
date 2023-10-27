@@ -17,10 +17,14 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
             var info = new SKImageInfo() { Width = 50, Height = 50, ColorSpace = b.ColorSpace };
             Bitmap = new SKBitmap(50, 50);
             b.ScalePixels(Bitmap, SKFilterQuality.None);
-            DrawingRect.Location = new(475, 1000);
+            
+            //DrawingRect.Location = new(475, 1000);
+            DrawingRect = new(475, 900, 525, 1000);
+           // DrawingRect.Location.X = 0;
             //bitmap.Info = info;
             //bitmap.Resize()
         }
+
 
         internal float xSpeed = 0f;
         internal float ySpeed = -5f;
@@ -32,19 +36,22 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         public bool Alive { get; internal set; } = false;
 
         protected override void DrawMainShape(SKCanvas canvas){
-            canvas.DrawBitmap(Bitmap, X * scaleX, Y * scaleY);
+            canvas.DrawBitmap(Bitmap, DrawingRectS);
         }
 
         internal event EventHandler ChangeScreen;
         public void updatePosition(){
-            DrawingRect.Offset(xSpeed, 0);
+            AddOffset(xSpeed, ySpeed);
             tick++;
             if (Y < 0){
                 //DrawingRect.Offset(0, 1000f);
+                SetLocation(450f, 1000f);
                 tick = 0;
                 ChangeScreen.Invoke(this, new EventArgs());
             }
         }
+
+        
 
         public void Tick(MovementControl.keyHeld direction) {
             switch (direction){

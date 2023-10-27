@@ -21,12 +21,16 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
 
         internal override List<ITrap> LoadMovingElements()
         {
-            var xd = new List<ITrap>();
-            var re = new SKRect(100, 100, 200, 200);
-            re.Location = new SKPoint(100, 100);
-            var wdw = new OpeningWindow(re);
-            xd.Add(wdw);
-            return xd;
+            List<ITrap> traps = new List<ITrap>();
+            List<SKRect> rects = new List<SKRect>();
+
+            for(int i = 0;i < 15;i++){
+                RectGenerator.GenerateRect(ref rects,50,50,150,150);
+            }
+            foreach(SKRect rect in rects){
+                traps.Add(new OpeningWindow(rect));
+            }
+            return traps;
         }
 
         internal override void loadTextures()

@@ -125,6 +125,8 @@ namespace AustralianFall
             IDisplayable.canvasHeight = (float)PaintSurface.Height;
             currentScreen.resize();
             nextScreen.resize();
+            australian.Resize();
+
         }
 
         private void OnPaintAsync(object sender, SkiaSharp.Views.Maui.SKPaintSurfaceEventArgs e)

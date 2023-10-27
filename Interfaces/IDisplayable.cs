@@ -12,13 +12,48 @@ namespace AustralianFall.Interfaces
         internal static float canvasHeight = 1000;
         protected float scaleX => (canvasWidth / defaultCanvasWidth);
         protected float scaleY => (canvasHeight / (defaultCanvasHeight));
-        protected SKRect DrawingRect;
-        protected virtual SKBitmap Bitmap { get; set; }
-        internal void Resize(float Width, float Height)
+        
+        private SKRect _DrawingRect;
+        protected SKRect DrawingRect { 
+            get {
+                return _DrawingRect;
+            } 
+            set 
+            {
+                _DrawingRect = value;
+                RescaleRect();
+            }
+        }
+        private void RescaleRect()
         {
-            if (Width <= 0 || Height <= 0)
-                return;
-            ResizePrecize(Width, Height);
+            _DrawingRectS = new SKRect(_DrawingRect.Left * scaleX, _DrawingRect.Top * scaleY, _DrawingRect.Right * scaleX, _DrawingRect.Bottom * scaleY);
+        }
+        protected SKRect _DrawingRectS;
+        protected SKRect DrawingRectS
+        {
+            get
+            {
+                var xd = _DrawingRectS;
+                return xd;
+            }
+            set
+            {
+                _DrawingRectS = value;
+            }
+        }
+
+        protected void SetLocation(float XX, float YY)
+        {
+            _DrawingRect.Location = new SKPoint(XX, YY);
+            _DrawingRectS.Location = new SKPoint(XX * scaleX, YY * scaleY);
+        }
+        protected virtual SKBitmap Bitmap { get; set; }
+        internal void Resize()
+        {
+           // if (Width <= 0 || Height <= 0)
+           //     return;
+            ResizePrecize(canvasWidth, canvasHeight);
+            RescaleRect();
            // canvasWidth = Width;
            // canvasHeight = Height;
         }
@@ -27,7 +62,16 @@ namespace AustralianFall.Interfaces
         {
             DrawMainShape(canvas);
         }
-        protected abstract void DrawMainShape(SKCanvas canvas);
+        protected virtual void DrawMainShape(SKCanvas canvas)
+        {
+            canvas.DrawBitmap(Bitmap, DrawingRectS);
+        }
+
+        protected void AddOffset(float xSpeed, float ySpeed)
+        {
+            _DrawingRect.Offset(xSpeed, ySpeed);
+            _DrawingRectS.Offset(xSpeed * scaleX, ySpeed*scaleY);
+        }
         internal class Hitbox
         {
             internal List<SKRect> Points;

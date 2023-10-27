@@ -41,9 +41,14 @@ namespace AustralianFall.Classes.VisualElemetns
             info.Width = (int)IDisplayable.canvasWidth;
             info.Height = (int)IDisplayable.canvasHeight;
             staticBitmap = staticBitmap.Resize(info, SKFilterQuality.High);
+            foreach(ITrap t in Traps)
+            {
+                t.Resize();
+            }
         }
         internal Screen(int level)//todo make it async loading in background
         {
+            level = 0;/////////
             Type type = Type.GetType($"AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds.Map{++level}");
             if (type == null){
                 type = Type.GetType("AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds.MapDefault");
@@ -57,7 +62,9 @@ namespace AustralianFall.Classes.VisualElemetns
 
                 
                 Traps = levelAssets.LoadMovingElements();
+
                 foreach(ITrap trap in Traps) {
+                    trap.Resize();
                     var animatedtrap = trap as IAnimatedObject;
                     if (animatedtrap == null) { 
                         
