@@ -33,12 +33,12 @@ namespace AustralianFall
             PaintSurface.EnableTouchEvents = true;
             TapGestureRecognizer rec = new TapGestureRecognizer();
             controller = new(australian);
+            currentScreen = new(screenIndex++);
+            nextScreen = new(screenIndex++);
             clockerTicker = new GameLoop();
             clockerTicker.TimerElapsed += OnGameLoopTimerElapsed;
+            clockerTicker.TimerElapsed += currentScreen.OnGameTick;
             clockerTicker.Start();
-            currentScreen = new(screenIndex++);
-
-            nextScreen = new(screenIndex++);
             //SkiaSharp.Views.Maui.Controls.SKGLView ciew = new SkiaSharp.Views.Maui.Controls.SKGLView();
             //ciew.PaintSurface += onPaintskg;
 
@@ -71,8 +71,10 @@ namespace AustralianFall
 
         private void ChangeScreen(object sender, EventArgs e)
         {
+            clockerTicker.TimerElapsed -= currentScreen.OnGameTick;
             currentScreen = nextScreen;
-            nextScreen = new Screen(screenIndex++);   
+            nextScreen = new Screen(screenIndex++);
+            clockerTicker.TimerElapsed += currentScreen.OnGameTick;
         }
 
 #if ANDROID || IOS

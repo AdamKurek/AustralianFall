@@ -3,13 +3,28 @@ using AustralianFall.Interfaces;
 using SkiaSharp;
 using System.Timers;
 using AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds;
+using Microsoft.Maui.Animations;
 
 namespace AustralianFall.Classes.VisualElemetns
 {
     internal class Screen
     {
-        internal List<ITrap> Traps;
-        //internal List<IMovable> Movables;
+        internal int tick = 0;
+        private List<ITrap> _traps;
+        internal List<ITrap> Traps {get => _traps;
+            set
+            {
+                Movables = new();
+                foreach(var t in value)
+                {
+                    var tt = t as IMovable;
+                    if(tt == null) { continue; }
+                    Movables.Add(tt);
+                }
+                _traps = value;
+            }
+        }
+        internal List<IMovable> Movables;
         //internal List<IAnimatedObject> Animations;
         internal ILevelAssets levelAssets;
         internal Australian australian;
@@ -29,13 +44,7 @@ namespace AustralianFall.Classes.VisualElemetns
         }
         internal Screen(int level)//todo make it async loading in background
         {
-
-            //Type type = Type.GetType("AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds.Map1");
-            string xd = $"AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds.Map{++level}";
-            Type type = Type.GetType(xd);
-
-
-            //Type type = Type.GetType($"AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds.Map{level}");
+            Type type = Type.GetType($"AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds.Map{++level}");
             if (type == null){
                 type = Type.GetType("AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds.MapDefault");
             }
@@ -45,19 +54,33 @@ namespace AustralianFall.Classes.VisualElemetns
             {
                 staticBitmap = levelAssets.LoadBackground();
                 levelAssets.loadTextures();
+
+                
                 Traps = levelAssets.LoadMovingElements();
+                foreach(ITrap trap in Traps) {
+                    var animatedtrap = trap as IAnimatedObject;
+                    if (animatedtrap == null) { 
+                        
+                        continue;
+                    }
+                    var sad = trap.GetType().Name;
+                    animatedtrap.animationFrames = ((List<SKBitmap>)levelAssets.bitmaps[trap.GetType().Name]).ToArray();
+                }
+                BindTraps();
+                resize();//maybe go up
             }
 
 
 
 
         }
-        private void OnGameLoopTimerElapsed(object sender, ElapsedEventArgs e)
+        internal void OnGameTick(object sender, ElapsedEventArgs e)
         {
-            foreach (IMovable movableElement  in Traps)
+            foreach (var movableElement in Movables)
             {
                 movableElement.updatePosition();
             }
+            tick++;
         }
 
         internal void DrawTraps(SKCanvas canvas)
@@ -65,6 +88,14 @@ namespace AustralianFall.Classes.VisualElemetns
             foreach (var t in Traps)
             {
                 t.Draw(canvas);
+            }
+        }
+
+        private void BindTraps()
+        {
+            foreach(var t in Traps)
+            {
+                t.screen = this;
             }
         }
     }

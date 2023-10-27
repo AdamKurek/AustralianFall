@@ -1,11 +1,7 @@
 ﻿using AustralianFall.Classes.Services;
+using AustralianFall.Classes.VisualElemetns.MovingElements;
 using AustralianFall.Interfaces;
 using SkiaSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
 {
@@ -19,17 +15,23 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
 
         internal override List<SKBitmap> LoadBackgroundElements()
         {
-            return new List<SKBitmap>();
+            var xd = new List<SKBitmap>();
+            return xd;
         }
 
         internal override List<ITrap> LoadMovingElements()
         {
-            return new List<ITrap>();
+            var xd = new List<ITrap>();
+            var re = new SKRect(100, 100, 200, 200);
+            re.Location = new SKPoint(100, 100);
+            var wdw = new OpeningWindow(re);
+            xd.Add(wdw);
+            return xd;
         }
 
         internal override void loadTextures()
         {
-            LoadBitmaps("windowOpen",6);
+            LoadBitmaps("OpeningWindow",6);
         }
     }
 }

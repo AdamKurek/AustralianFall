@@ -11,7 +11,9 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
 {
     internal class Australian : IDisplayable, IMovable, IPossessable
     {
-        internal Australian(SKBitmap b){
+
+        internal static int tick = 0;
+        internal Australian(SKBitmap b) {
             var info = new SKImageInfo() { Width = 50, Height = 50, ColorSpace = b.ColorSpace };
             Bitmap = new SKBitmap(50, 50);
             b.ScalePixels(Bitmap, SKFilterQuality.None);
@@ -24,7 +26,8 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         internal float ySpeed = -5f;
 
         public float X => DrawingRect.Location.X;
-        public float Y => DrawingRect.Location.Y;
+        public float Y => 1000 + (ySpeed * tick);
+        //DrawingRect.Location.Y;
 
         public bool Alive { get; internal set; } = false;
 
@@ -34,9 +37,11 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
 
         internal event EventHandler ChangeScreen;
         public void updatePosition(){
-            DrawingRect.Offset(xSpeed, ySpeed);
+            DrawingRect.Offset(xSpeed, 0);
+            tick++;
             if (Y < 0){
-                DrawingRect.Offset(0, 1000f);
+                //DrawingRect.Offset(0, 1000f);
+                tick = 0;
                 ChangeScreen.Invoke(this, new EventArgs());
             }
         }

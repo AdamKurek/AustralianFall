@@ -52,12 +52,12 @@
 	  <None Remove="Resources\Raw\maluch.png" />
 	  <None Remove="Resources\Raw\RawImages\Backgrounds\Background1.jpg" />
 	  <None Remove="Resources\Raw\RawImages\DefaultBitmap.png" />
-	  <None Remove="Resources\Raw\RawImages\Entities\Map1\windowOpen0.png" />
-	  <None Remove="Resources\Raw\RawImages\Entities\Map1\windowOpen1.png" />
-	  <None Remove="Resources\Raw\RawImages\Entities\Map1\windowOpen2.png" />
-	  <None Remove="Resources\Raw\RawImages\Entities\Map1\windowOpen3.png" />
-	  <None Remove="Resources\Raw\RawImages\Entities\Map1\windowOpen4.png" />
-	  <None Remove="Resources\Raw\RawImages\Entities\Map1\windowOpen5.png" />
+	  <None Remove="Resources\Raw\RawImages\Entities\Map1\OpeningWindow0.png" />
+	  <None Remove="Resources\Raw\RawImages\Entities\Map1\OpeningWindow1.png" />
+	  <None Remove="Resources\Raw\RawImages\Entities\Map1\OpeningWindow2.png" />
+	  <None Remove="Resources\Raw\RawImages\Entities\Map1\OpeningWindow3.png" />
+	  <None Remove="Resources\Raw\RawImages\Entities\Map1\OpeningWindow4.png" />
+	  <None Remove="Resources\Raw\RawImages\Entities\Map1\OpeningWindow5.png" />
 	  <None Remove="Resources\Raw\RawImages\Entities\window.jpg" />
 	</ItemGroup>
 
