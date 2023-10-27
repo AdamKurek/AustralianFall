@@ -13,9 +13,10 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
             return ImageLoader.LoadBitmap(resourceID).Result;
         }
 
-        internal override List<SKBitmap> LoadBackgroundElements()
+        internal override List<ITrap> LoadBackgroundElements()
         {
-            var xd = new List<SKBitmap>();
+            var xd = new List<ITrap>();
+            //xd.Add();
             return xd;
         }
 
@@ -23,13 +24,13 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
         {
             List<ITrap> traps = new List<ITrap>();
             List<SKRect> rects = new List<SKRect>();
-
             for(int i = 0;i < 15;i++){
                 RectGenerator.GenerateRect(ref rects,50,50,150,150);
             }
             foreach(SKRect rect in rects){
                 traps.Add(new OpeningWindow(rect));
             }
+            
             return traps;
         }
 

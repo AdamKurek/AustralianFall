@@ -70,11 +70,14 @@ namespace AustralianFall.Classes.VisualElemetns
                         
                         continue;
                     }
-                    var sad = trap.GetType().Name;
                     animatedtrap.animationFrames = ((List<SKBitmap>)levelAssets.bitmaps[trap.GetType().Name]).ToArray();
                 }
                 BindTraps();
                 resize();//maybe go up
+                foreach(var trap in Traps)
+                {
+                    trap.Revert();
+                }
             }
 
 

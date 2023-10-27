@@ -20,5 +20,12 @@ namespace AustralianFall.Interfaces
         public Hitbox[] hitboxFrames;
         internal int[] animationTreholds;
 
+        internal override void Revert()
+        {
+            for(int i=0;i<States;i++) {
+                _animationFrames[i] = FlipBitmap(_animationFrames[i]);
+            }
+        }
+
     }
 }

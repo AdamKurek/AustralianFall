@@ -16,6 +16,7 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         {
             get 
             {
+
                 switch(activated)
                 {
                     case TrapState.sleeping:

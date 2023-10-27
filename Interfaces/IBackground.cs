@@ -7,7 +7,7 @@ namespace AustralianFall.Interfaces
     internal abstract class ILevelAssets
     {
         internal abstract SKBitmap LoadBackground();
-        internal abstract List<SKBitmap> LoadBackgroundElements();
+        internal abstract List<ITrap> LoadBackgroundElements();
         internal abstract List<ITrap> LoadMovingElements();
         internal abstract void loadTextures();
         bool texturesLoaded = false;

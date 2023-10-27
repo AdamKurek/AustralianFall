@@ -17,9 +17,9 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
             return ImageLoader.LoadBitmap(resourceID).Result;
         }
 
-        internal override List<SKBitmap> LoadBackgroundElements()
+        internal override List<ITrap> LoadBackgroundElements()
         {
-            return new List<SKBitmap>();
+            return new List<ITrap>();
         }
 
         internal override List<ITrap> LoadMovingElements()

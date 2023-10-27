@@ -41,7 +41,6 @@ namespace AustralianFall.Interfaces
                 _DrawingRectS = value;
             }
         }
-
         protected void SetLocation(float XX, float YY)
         {
             _DrawingRect.Location = new SKPoint(XX, YY);
@@ -71,6 +70,58 @@ namespace AustralianFall.Interfaces
         {
             _DrawingRect.Offset(xSpeed, ySpeed);
             _DrawingRectS.Offset(xSpeed * scaleX, ySpeed*scaleY);
+        }
+
+        internal virtual void Revert()
+        {
+            Bitmap = RotateBitmap(Bitmap, 180);
+            //Thread.Sleep(1000);
+        
+        }
+        internal static SKBitmap RotateBitmap(SKBitmap bitmap, double angle)
+        {
+            double radians = Math.PI * angle / 180;
+            float sine = (float)Math.Abs(Math.Sin(radians));
+            float cosine = (float)Math.Abs(Math.Cos(radians));
+            int originalWidth = bitmap.Width;
+            int originalHeight = bitmap.Height;
+            int rotatedWidth = (int)(cosine * originalWidth + sine * originalHeight);
+            int rotatedHeight = (int)(cosine * originalHeight + sine * originalWidth);
+
+            var rotatedBitmap = new SKBitmap(rotatedWidth, rotatedHeight);
+
+            using (var surface = new SKCanvas(rotatedBitmap))
+            {
+                surface.Clear();
+                surface.Translate(rotatedWidth / 2, rotatedHeight / 2);
+                surface.RotateDegrees((float)angle);
+                surface.Translate(-originalWidth / 2, -originalHeight / 2);
+                surface.DrawBitmap(bitmap, new SKPoint());
+            }
+
+            return rotatedBitmap;
+        }
+
+        internal static SKBitmap FlipBitmap(SKBitmap bitmap)
+        {
+            var flippedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
+
+            using (var surface = new SKCanvas(flippedBitmap))
+            {
+                surface.Clear();
+
+                // Apply a horizontal flip transformation
+                var matrix = SKMatrix.MakeScale(-1, 1);
+
+                // Translate the image back into the canvas
+                matrix.TransX = bitmap.Width;
+
+                surface.SetMatrix(matrix);
+
+                surface.DrawBitmap(bitmap, new SKPoint());
+            }
+
+            return flippedBitmap;
         }
         internal class Hitbox
         {
