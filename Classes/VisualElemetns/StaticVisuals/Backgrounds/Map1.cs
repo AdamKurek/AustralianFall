@@ -27,10 +27,15 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
             for(int i = 0;i < 15;i++){
                 RectGenerator.GenerateRect(ref rects,50,50,150,150);
             }
-            foreach(SKRect rect in rects){
-                traps.Add(new OpeningWindow(rect));
+
+            {
+                int i = 0;
+                foreach (SKRect rect in rects)
+                {
+                    traps.Add(new OpeningWindow(rect) {flipped = i++ % 2 == 0 ? true:false});
+                }
             }
-            
+
             return traps;
         }
 

@@ -76,7 +76,7 @@ namespace AustralianFall.Classes.VisualElemetns
                 resize();//maybe go up
                 foreach(var trap in Traps)
                 {
-                    trap.Revert();
+                    trap.Flip();
                 }
             }
 

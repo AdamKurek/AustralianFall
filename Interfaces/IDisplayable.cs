@@ -46,7 +46,8 @@ namespace AustralianFall.Interfaces
             _DrawingRect.Location = new SKPoint(XX, YY);
             _DrawingRectS.Location = new SKPoint(XX * scaleX, YY * scaleY);
         }
-        protected virtual SKBitmap Bitmap { get; set; }
+        private SKBitmap _Bitmap;
+        protected virtual SKBitmap Bitmap { get => _Bitmap; set => _Bitmap = flipped ? FlipBitmap(value) : value; }
         internal void Resize()
         {
            // if (Width <= 0 || Height <= 0)
@@ -72,12 +73,14 @@ namespace AustralianFall.Interfaces
             _DrawingRectS.Offset(xSpeed * scaleX, ySpeed*scaleY);
         }
 
-        internal virtual void Revert()
+        internal virtual void Flip()
         {
-            Bitmap = RotateBitmap(Bitmap, 180);
+            Bitmap = FlipBitmap(Bitmap);
+            //Bitmap = RotateBitmap(Bitmap, 180);
             //Thread.Sleep(1000);
         
         }
+        internal bool flipped = false;
         internal static SKBitmap RotateBitmap(SKBitmap bitmap, double angle)
         {
             double radians = Math.PI * angle / 180;
@@ -105,15 +108,10 @@ namespace AustralianFall.Interfaces
         internal static SKBitmap FlipBitmap(SKBitmap bitmap)
         {
             var flippedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
-
             using (var surface = new SKCanvas(flippedBitmap))
             {
                 surface.Clear();
-
-                // Apply a horizontal flip transformation
-                var matrix = SKMatrix.MakeScale(-1, 1);
-
-                // Translate the image back into the canvas
+                var matrix = SKMatrix.CreateScale(-1, 1);
                 matrix.TransX = bitmap.Width;
 
                 surface.SetMatrix(matrix);

@@ -58,6 +58,7 @@
 	  <None Remove="Resources\Raw\RawImages\Entities\Map1\OpeningWindow3.png" />
 	  <None Remove="Resources\Raw\RawImages\Entities\Map1\OpeningWindow4.png" />
 	  <None Remove="Resources\Raw\RawImages\Entities\Map1\OpeningWindow5.png" />
+	  <None Remove="Resources\Raw\RawImages\Entities\Map1\Window.png" />
 	  <None Remove="Resources\Raw\RawImages\Entities\window.jpg" />
 	</ItemGroup>
 

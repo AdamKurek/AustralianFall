@@ -14,17 +14,26 @@ namespace AustralianFall.Interfaces
             set
             {
                 States = value.Length;
+                if (flipped == true)
+                {
+                    _animationFrames = new SKBitmap[value.Length];
+                    for (int i = 0;i<value.Length;i++)
+                    {
+                        _animationFrames[i] = FlipBitmap(value[i]);
+                    }
+                    return;
+                }
+                                
                 _animationFrames = value;
+                
             }
         }
         public Hitbox[] hitboxFrames;
         internal int[] animationTreholds;
 
-        internal override void Revert()
+        internal override void Flip()
         {
-            for(int i=0;i<States;i++) {
-                _animationFrames[i] = FlipBitmap(_animationFrames[i]);
-            }
+            flipped = true;
         }
 
     }
