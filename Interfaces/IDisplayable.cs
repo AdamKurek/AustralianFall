@@ -78,11 +78,16 @@ namespace AustralianFall.Interfaces
         {
             return DrawingRect;
         }
-        internal Hitbox getEffectiveHitbox()
+        internal virtual Hitbox getEffectiveHitbox()
         {
-            Hitbox hitbox = new();
-            hitbox.Points = new() { new(DrawingRect.Location.X, DrawingRect.Location.Y), new(DrawingRect.MidX, DrawingRect.Location.Y), new (DrawingRect.MidX, DrawingRect.MidY), new(DrawingRect.Location.X, DrawingRect.MidY) };
-            return hitbox;
+            return  new Hitbox() { Points =new() { 
+                    new(DrawingRect.Location.X, DrawingRect.Location.Y),
+                    new(DrawingRect.Location.X + DrawingRect.Width, DrawingRect.Location.Y), 
+                    new(DrawingRect.Location.X + DrawingRect.Width, DrawingRect.Location.Y + DrawingRect.Height),
+                    new(DrawingRect.Location.X, DrawingRect.Location.Y + DrawingRect.Height) }
+            };
+
+             ;
         }
 
 

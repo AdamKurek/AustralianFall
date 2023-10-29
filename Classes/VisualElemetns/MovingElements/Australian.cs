@@ -19,7 +19,7 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
             b.ScalePixels(Bitmap, SKFilterQuality.None);
             
             //DrawingRect.Location = new(475, 1000);
-            DrawingRect = new(475, 900, 525, 1000);
+            DrawingRect = new(475, 1300, 525, 1400);
            // DrawingRect.Location.X = 0;
             //bitmap.Info = info;
             //bitmap.Resize()
