@@ -1,4 +1,5 @@
-﻿using SkiaSharp;
+﻿using Clipper2Lib;
+using SkiaSharp;
 
 namespace AustralianFall.Interfaces
 {
@@ -73,6 +74,18 @@ namespace AustralianFall.Interfaces
             _DrawingRectS.Offset(xSpeed * scaleX, ySpeed*scaleY);
         }
 
+        internal SKRect getHitboxRect()
+        {
+            return DrawingRect;
+        }
+        internal Hitbox getEffectiveHitbox()
+        {
+            Hitbox hitbox = new();
+            hitbox.Points = new() { new(DrawingRect.Location.X, DrawingRect.Location.Y), new(DrawingRect.MidX, DrawingRect.Location.Y), new (DrawingRect.MidX, DrawingRect.MidY), new(DrawingRect.Location.X, DrawingRect.MidY) };
+            return hitbox;
+        }
+
+
         internal virtual void Flip()
         {
             Bitmap = FlipBitmap(Bitmap);
@@ -123,7 +136,52 @@ namespace AustralianFall.Interfaces
         }
         internal class Hitbox
         {
-            internal List<SKRect> Points;
+            internal List<SKPoint> Points;
+
+
+            public static Path64 SKPointArrayToPath64(List<SKPoint> points)
+            {
+                Path64 path = new Path64();
+                foreach (SKPoint point in points)
+                {
+                    long x = (long)Math.Round(point.X * 16384);
+                    long y = (long)Math.Round(point.Y * 16384);
+                    path.Add(new Point64(x, y));
+                }
+                return path;
+            }
+            public static List<SKPoint[]> Path64ToSKPointArrayList(Path64 path)
+            {
+                List<SKPoint[]> list = new List<SKPoint[]>();
+                SKPoint[] points = new SKPoint[path.Count];
+                for (int i = 0; i < path.Count; i++)
+                {
+                    points[i] = new SKPoint((float)path[i].X / 16384, (float)path[i].Y / 16384);
+                }
+                list.Add(points);
+                return list;
+            }
+
+            public static double calculateCommonArea(Hitbox p1, List<Hitbox> p2)
+            {
+                Paths64 subject = new Paths64();
+                Paths64 clip = new Paths64();
+                subject.Add(SKPointArrayToPath64(p1.Points));
+                foreach (var figure in p2)
+                {
+                    clip.Add(SKPointArrayToPath64(figure.Points));
+                }
+                Paths64 commonArea = Clipper.Intersect(subject, clip, FillRule.NonZero);
+                Clipper.Area(commonArea);
+                List<SKPoint[]> result = new List<SKPoint[]>();
+                foreach (var path in commonArea)
+                {
+                    result.AddRange(Path64ToSKPointArrayList(path));
+                }
+                return Clipper.Area(commonArea);
+
+                //return result;
+            }
         }
     }
 }

@@ -10,18 +10,15 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
             DrawingRect = Rect;
         }
 
-       
-
         protected override SKBitmap Bitmap 
         {
             get 
             {
-
                 switch(activated)
                 {
                     case TrapState.sleeping:
                         {
-                            if (DrawingRect.Bottom + activationDistance > 1000 - (screen.tick * 5))
+                            if (DrawingRect.Bottom + activationDistance > screen.australian.Y)// 1000 - (screen.tick * 5))
                             {
                                 TickOfActivation = screen.tick;
                                 activated = TrapState.active;

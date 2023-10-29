@@ -14,18 +14,11 @@ namespace AustralianFall.Interfaces
         }
 
         
-        internal SKRect getHitboxRect()
-        {
-            return DrawingRect;
-        }
-        internal SKRect getEffectiveHitbox()
-        {
-            return getHitboxRect();
-        }
+       
         internal Screen screen;
         internal TrapState activated = TrapState.sleeping;
         internal int TickOfActivation;
-        internal int activationDistance = 300;
+        internal int activationDistance = 200;
     }
 
 }

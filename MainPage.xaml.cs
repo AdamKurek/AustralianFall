@@ -2,8 +2,6 @@
 using AustralianFall.Classes.VisualElemetns;
 using AustralianFall.Classes.VisualElemetns.MovingElements;
 using AustralianFall.Interfaces;
-using Microsoft.Maui.Platform;
-using SkiaSharp;
 using System.Timers;
 #if ANDROID
 #endif
@@ -12,13 +10,11 @@ namespace AustralianFall
 {
     public partial class MainPage : ContentPage
     {
-        Circle c = new();
         Australian australian;
         GameLoop clockerTicker;
         bool currentlyDrawing = false;
         Screen currentScreen;
         Screen nextScreen;
-        SKPaint paint;
         MovementControl controller;
         int screenIndex = 0;
         public MainPage()
@@ -33,23 +29,21 @@ namespace AustralianFall
             PaintSurface.EnableTouchEvents = true;
             TapGestureRecognizer rec = new TapGestureRecognizer();
             controller = new(australian);
-            currentScreen = new(screenIndex++);
-            nextScreen = new(screenIndex++);
+            currentScreen = new(screenIndex++) {australian = australian};
+            nextScreen = new(screenIndex++) {australian = australian};
             clockerTicker = new GameLoop();
             clockerTicker.TimerElapsed += OnGameLoopTimerElapsed;
             clockerTicker.TimerElapsed += currentScreen.OnGameTick;
             clockerTicker.Start();
             //SkiaSharp.Views.Maui.Controls.SKGLView ciew = new SkiaSharp.Views.Maui.Controls.SKGLView();
             //ciew.PaintSurface += onPaintskg;
-
 #if ANDROID || IOS
-
             var leftButton = new Button
             {
                 Opacity = 0.0,
                 BackgroundColor = Colors.Green,
-                
             };
+
             leftButton.Pressed += LeftTap;
             leftButton.Released += LeftRelease;
 
@@ -63,17 +57,15 @@ namespace AustralianFall
 
             BackgroundGrid.Add(leftButton,0,0);
             BackgroundGrid.Add(rightButton, 1, 0);
-
 #endif
-        }
 
-      
+        }
 
         private void ChangeScreen(object sender, EventArgs e)
         {
             clockerTicker.TimerElapsed -= currentScreen.OnGameTick;
             currentScreen = nextScreen;
-            nextScreen = new Screen(screenIndex++);
+            nextScreen = new Screen(screenIndex++) {australian = australian};
             clockerTicker.TimerElapsed += currentScreen.OnGameTick;
         }
 
@@ -150,6 +142,7 @@ namespace AustralianFall
             controller.tick();
 #endif
             australian.updatePosition();
+            currentScreen.checkColisions();
             Dispatcher.Dispatch(PaintSurface.InvalidateSurface);
         }
     }

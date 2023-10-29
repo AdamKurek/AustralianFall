@@ -108,5 +108,17 @@ namespace AustralianFall.Classes.VisualElemetns
                 t.screen = this;
             }
         }
+
+        internal void checkColisions(){
+            foreach(var t in Traps){
+                if (t.getHitboxRect().IntersectsWith(australian.getHitboxRect())){
+                     List<IDisplayable.Hitbox> lsss = new();
+                    lsss.Add(australian.getEffectiveHitbox());
+                    if (IDisplayable.Hitbox.calculateCommonArea(t.getEffectiveHitbox(), lsss) >0) { 
+                        australian.Alive = false;
+                    }
+                }
+            }
+        }
     }
 }
