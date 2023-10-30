@@ -15,13 +15,13 @@ namespace AustralianFall.Interfaces
                 SKPoint[] pts = new SKPoint[hitboxesPercentages[i].Points.Length]; 
                 for (int j = 0;j < hitboxesPercentages[i].Points.Length; j++)
                 {
-                    if (false)// flipped)
+                    if (flipped)// flipped)
                     {
-                        pts[j] = new SKPoint(hitboxesPercentages[i].Points[j].X * (1-getHitboxRect().Width) + getHitboxRect().Width, hitboxesPercentages[i].Points[j].Y * (1-getHitboxRect().Height) + getHitboxRect().Height);
+                        pts[j] = new SKPoint(hitboxesPercentages[i].Points[j].X * (1-getHitboxRect().Width) + getHitboxRect().Width + getHitboxRect().Location.X, hitboxesPercentages[i].Points[j].Y * (1-getHitboxRect().Height) + getHitboxRect().Height + getHitboxRect().Location.Y);
                     }
                     else
                     {
-                        pts[j] = new SKPoint(hitboxesPercentages[i].Points[j].X * getHitboxRect().Width, hitboxesPercentages[i].Points[j].Y * getHitboxRect().Height);
+                        pts[j] = new SKPoint(hitboxesPercentages[i].Points[j].X * getHitboxRect().Width + getHitboxRect().Location.X, hitboxesPercentages[i].Points[j].Y * getHitboxRect().Height + getHitboxRect().Location.Y);
                     }
                 }
                 _hitboxFrames[i] = new Hitbox(pts);
@@ -31,10 +31,6 @@ namespace AustralianFall.Interfaces
         private int _currentState =0;
         internal int currentState { get => _currentState;set 
             {
-                if (value == 6)
-                {
-                    _currentState = 5;
-                }
                 _currentState = value;
                     } }
 
@@ -42,10 +38,6 @@ namespace AustralianFall.Interfaces
         {
             get
             {
-                if (currentState > 5)
-                {
-                    return _animationFrames[5];
-                }
                 return _animationFrames[currentState];
             }
             set => base.Bitmap = value;
@@ -77,15 +69,6 @@ namespace AustralianFall.Interfaces
             get => hitboxFrames;
             set
             {
-                if (flipped == true)
-                {
-                    _hitboxFrames = new Hitbox[value.Length];
-                    for (int i = 0; i < value.Length; i++)
-                    {
-                        _hitboxFrames[i] = FlipHitbox(value[i]);
-                    }
-                    return;
-                }
                 _hitboxFrames = value;
             }
         }
