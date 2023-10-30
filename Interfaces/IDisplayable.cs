@@ -6,7 +6,10 @@ namespace AustralianFall.Interfaces
 
     internal abstract class IDisplayable : SKDrawable
     {
-       
+        protected IDisplayable(SKRect rc) 
+        {
+            _DrawingRect = rc;
+        }
         static internal float defaultCanvasWidth = 1000;
         static internal float defaultCanvasHeight = 1000;
         internal static float canvasWidth = 1000;
@@ -47,6 +50,13 @@ namespace AustralianFall.Interfaces
             _DrawingRect.Location = new SKPoint(XX, YY);
             _DrawingRectS.Location = new SKPoint(XX * scaleX, YY * scaleY);
         }
+
+
+        protected Hitbox FlipHitbox(Hitbox hitbox)
+        {
+            return hitbox;//TODODODODODODODDODO
+        }
+
         private SKBitmap _Bitmap;
         protected virtual SKBitmap Bitmap { get => _Bitmap; set => _Bitmap = flipped ? FlipBitmap(value) : value; }
         internal void Resize()
@@ -78,16 +88,18 @@ namespace AustralianFall.Interfaces
         {
             return DrawingRect;
         }
-        internal virtual Hitbox getEffectiveHitbox()
+        private Hitbox _hitbox;
+
+        internal virtual Hitbox hitbox { get => getDefaultHitbox(); }
+        internal virtual Hitbox getDefaultHitbox()
         {
-            return  new Hitbox() { Points =new() { 
+            return  new Hitbox() { Points = new SKPoint[] { 
                     new(DrawingRect.Location.X, DrawingRect.Location.Y),
                     new(DrawingRect.Location.X + DrawingRect.Width, DrawingRect.Location.Y), 
                     new(DrawingRect.Location.X + DrawingRect.Width, DrawingRect.Location.Y + DrawingRect.Height),
                     new(DrawingRect.Location.X, DrawingRect.Location.Y + DrawingRect.Height) }
             };
 
-             ;
         }
 
 
@@ -141,9 +153,28 @@ namespace AustralianFall.Interfaces
         }
         internal class Hitbox
         {
-            internal List<SKPoint> Points;
+            public Hitbox(){
+                Points = Array.Empty<SKPoint>();
+            }
+            public Hitbox(SKPoint[] hitbox)
+            {
+                Points = hitbox;
+            }
+            internal SKPoint[] Points;
 
 
+
+            public static Path64 SKPointArrayToPath64(SKPoint[] points)
+            {
+                Path64 path = new Path64();
+                foreach (SKPoint point in points)
+                {
+                    long x = (long)Math.Round(point.X * 16384);
+                    long y = (long)Math.Round(point.Y * 16384);
+                    path.Add(new Point64(x, y));
+                }
+                return path;
+            }
             public static Path64 SKPointArrayToPath64(List<SKPoint> points)
             {
                 Path64 path = new Path64();
@@ -167,7 +198,7 @@ namespace AustralianFall.Interfaces
                 return list;
             }
 
-            public static double calculateCommonArea(Hitbox p1, List<Hitbox> p2)
+            public static double calculateCommonArea(Hitbox p1, Hitbox[] p2)
             {
                 Paths64 subject = new Paths64();
                 Paths64 clip = new Paths64();

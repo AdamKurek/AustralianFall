@@ -8,9 +8,8 @@ namespace AustralianFall.Interfaces
         internal enum TrapState { 
             sleeping,active,done
         }
-        protected ITrap(Screen screen = null)
+        protected ITrap(SKRect rc):base(rc)
         {
-            this.screen = screen;
         }
 
         

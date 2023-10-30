@@ -141,7 +141,7 @@ namespace AustralianFall
 #if ANDROID || IOS
             controller.tick();
 #endif
-            australian.updatePosition();
+            australian.Tick();
             currentScreen.checkColisions();
             Dispatcher.Dispatch(PaintSurface.InvalidateSurface);
         }

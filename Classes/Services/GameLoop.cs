@@ -10,7 +10,8 @@ namespace AustralianFall.Classes.Services
 
         public GameLoop()
         {
-            timer = new Timer(1000f / 60f); // Update game 60 times per second
+            timer = new Timer(1000f / 60f); 
+            // Update game 60 times per second
             timer.Elapsed += OnTimerElapsed;
         }
         public void Start()

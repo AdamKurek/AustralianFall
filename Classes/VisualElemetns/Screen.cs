@@ -17,14 +17,14 @@ namespace AustralianFall.Classes.VisualElemetns
                 Movables = new();
                 foreach(var t in value)
                 {
-                    var tt = t as IMovable;
+                    var tt = t as ITickable;
                     if(tt == null) { continue; }
                     Movables.Add(tt);
                 }
                 _traps = value;
             }
         }
-        internal List<IMovable> Movables;
+        internal List<ITickable> Movables;
         //internal List<IAnimatedObject> Animations;
         internal ILevelAssets levelAssets;
         internal Australian australian;
@@ -72,12 +72,10 @@ namespace AustralianFall.Classes.VisualElemetns
                     }
                     animatedtrap.animationFrames = ((List<SKBitmap>)levelAssets.bitmaps[trap.GetType().Name]).ToArray();
                 }
+
                 BindTraps();
-                resize();//maybe go up
-                foreach(var trap in Traps)
-                {
-                    trap.Flip();
-                }
+                resize();
+               
             }
 
 
@@ -88,7 +86,7 @@ namespace AustralianFall.Classes.VisualElemetns
         {
             foreach (var movableElement in Movables)
             {
-                movableElement.updatePosition();
+                movableElement.Tick();
             }
             tick++;
         }
@@ -111,10 +109,10 @@ namespace AustralianFall.Classes.VisualElemetns
 
         internal void checkColisions(){
             foreach(var t in Traps){
-                if (t.getHitboxRect().IntersectsWith(australian.getHitboxRect())){
-                     List<IDisplayable.Hitbox> lsss = new();
-                    lsss.Add(australian.getEffectiveHitbox());
-                    if (IDisplayable.Hitbox.calculateCommonArea(t.getEffectiveHitbox(), lsss) >0) { 
+                if (t.getHitboxRect().IntersectsWith(australian.getHitboxRect())) {
+                    IDisplayable.Hitbox[] lsss = new IDisplayable.Hitbox[1];
+                    lsss[0] = australian.hitbox;
+                    if (IDisplayable.Hitbox.calculateCommonArea(t.hitbox, lsss) >0) { 
                         australian.Alive = false;
                     }
                 }

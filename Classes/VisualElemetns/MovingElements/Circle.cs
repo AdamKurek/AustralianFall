@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace AustralianFall.Classes.VisualElemetns.MovingElements
 {
-    internal class Circle : IDisplayable
+    internal class Circle// : IDisplayable
     {
         internal float x = 500;
         internal float y = 500;
         internal float radiusX = 250;
-        internal float radiusY = 250;
+        internal float radiusY = 250;/*
         internal float scaledX => x * (canvasWidth / defaultCanvasWidth);
         internal float scaledY => y * (canvasHeight / defaultCanvasHeight);
         internal float scaledRadiusX => radiusX * (canvasWidth / defaultCanvasWidth);
@@ -22,6 +22,6 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         protected override void DrawMainShape(SKCanvas canvas)
         {
             canvas.DrawOval(scaledX, scaledY, scaledRadiusX, scaledRadiusY, new SKPaint() { Color = SKColors.AliceBlue });
-        }
+        }*/
     }
 }

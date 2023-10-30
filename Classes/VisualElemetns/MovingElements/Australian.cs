@@ -9,17 +9,16 @@ using System.Threading.Tasks;
 
 namespace AustralianFall.Classes.VisualElemetns.MovingElements
 {
-    internal class Australian : IDisplayable, IMovable, IPossessable
+    internal class Australian : IDisplayable, ITickable, IPossessable
     {
 
         //internal static int tick = 0;
-        internal Australian(SKBitmap b) {
+        internal Australian(SKBitmap b) : base(new(475, 1300, 525, 1400))
+        {
             var info = new SKImageInfo() { Width = 50, Height = 50, ColorSpace = b.ColorSpace };
             Bitmap = new SKBitmap(50, 50);
             b.ScalePixels(Bitmap, SKFilterQuality.None);
-            
             //DrawingRect.Location = new(475, 1000);
-            DrawingRect = new(475, 1300, 525, 1400);
            // DrawingRect.Location.X = 0;
             //bitmap.Info = info;
             //bitmap.Resize()
@@ -40,7 +39,7 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         }
 
         internal event EventHandler ChangeScreen;
-        public void updatePosition(){
+        public void Tick(){
             if (Alive){
                 //tick++;
                 AddOffset(xSpeed, ySpeed);
