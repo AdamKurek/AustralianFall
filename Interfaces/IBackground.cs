@@ -6,7 +6,13 @@ namespace AustralianFall.Interfaces
 {
     internal abstract class ILevelAssets
     {
+        public static Random Random = new Random();
         internal abstract SKBitmap LoadBackground();
+        //{
+        //    var xd = this.GetType().Name;
+        //    var nr = int.Parse(xd.Substring(3, xd.Length - 1));
+        //    "RawImages/Backgrounds/Backgroundnr.jpg";
+        //}
         internal abstract List<ITrap> LoadBackgroundElements();
         internal abstract List<ITrap> LoadMovingElements();
         internal abstract void loadTextures();

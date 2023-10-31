@@ -29,11 +29,13 @@ namespace AustralianFall
             PaintSurface.EnableTouchEvents = true;
             TapGestureRecognizer rec = new TapGestureRecognizer();
             controller = new(australian);
-            currentScreen = new(screenIndex++) {australian = australian};
-            nextScreen = new(screenIndex++) {australian = australian};
+            currentScreen = new(screenIndex++) { australian = australian };
+            nextScreen = new(screenIndex++) { australian = australian };
             clockerTicker = new GameLoop();
             clockerTicker.TimerElapsed += OnGameLoopTimerElapsed;
             clockerTicker.TimerElapsed += currentScreen.OnGameTick;
+        
+
             clockerTicker.Start();
             //SkiaSharp.Views.Maui.Controls.SKGLView ciew = new SkiaSharp.Views.Maui.Controls.SKGLView();
             //ciew.PaintSurface += onPaintskg;

@@ -51,14 +51,8 @@
 	<ItemGroup>
 	  <None Remove="Resources\Raw\maluch.png" />
 	  <None Remove="Resources\Raw\RawImages\Backgrounds\Background1.jpg" />
+	  <None Remove="Resources\Raw\RawImages\Backgrounds\Background2.jpg" />
 	  <None Remove="Resources\Raw\RawImages\DefaultBitmap.png" />
-	  <None Remove="Resources\Raw\RawImages\Entities\Map1\OpeningWindow0.png" />
-	  <None Remove="Resources\Raw\RawImages\Entities\Map1\OpeningWindow1.png" />
-	  <None Remove="Resources\Raw\RawImages\Entities\Map1\OpeningWindow2.png" />
-	  <None Remove="Resources\Raw\RawImages\Entities\Map1\OpeningWindow3.png" />
-	  <None Remove="Resources\Raw\RawImages\Entities\Map1\OpeningWindow4.png" />
-	  <None Remove="Resources\Raw\RawImages\Entities\Map1\OpeningWindow5.png" />
-	  <None Remove="Resources\Raw\RawImages\Entities\Map1\Window.png" />
 	  <None Remove="Resources\Raw\RawImages\Entities\window.jpg" />
 	</ItemGroup>
 

@@ -48,8 +48,8 @@ namespace AustralianFall.Classes.VisualElemetns
         }
         internal Screen(int level)//todo make it async loading in background
         {
-            level = 0;/////////
-            Type type = Type.GetType($"AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds.Map{++level}");
+            //level = 0;/////////
+            Type type = Type.GetType($"AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds.Map{level}");
             if (type == null){
                 type = Type.GetType("AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds.MapDefault");
             }
@@ -112,7 +112,7 @@ namespace AustralianFall.Classes.VisualElemetns
                 if (t.getHitboxRect().IntersectsWith(australian.getHitboxRect())) {
                     IDisplayable.Hitbox[] lsss = new IDisplayable.Hitbox[1];
                     lsss[0] = australian.hitbox;
-                    if (IDisplayable.Hitbox.calculateCommonArea(t.hitbox, lsss) >0) { 
+                    if (IDisplayable.Hitbox.calculateCommonArea(t.hitbox, lsss) >10) { 
                         australian.Alive = false;
                     }
                 }
