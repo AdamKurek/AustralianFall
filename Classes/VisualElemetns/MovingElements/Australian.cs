@@ -34,9 +34,7 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
 
         public bool Alive { get; internal set; } = false;
 
-        protected override void DrawMainShape(SKCanvas canvas){
-            canvas.DrawBitmap(Bitmap, DrawingRectS);
-        }
+       
 
         internal event EventHandler ChangeScreen;
         public void Tick(){

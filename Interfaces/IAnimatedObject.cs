@@ -19,7 +19,7 @@ namespace AustralianFall.Interfaces
                     {
                         pts[j] = new SKPoint(
                             hitboxesPercentages[i].Points[j].X * (1-getHitboxRect().Width) + getHitboxRect().Width + getHitboxRect().Location.X,
-                            hitboxesPercentages[i].Points[j].Y * (1-getHitboxRect().Height) + getHitboxRect().Height + getHitboxRect().Location.Y);
+                            hitboxesPercentages[i].Points[j].Y * getHitboxRect().Height + getHitboxRect().Location.Y);
                     }
                     else
                     {
