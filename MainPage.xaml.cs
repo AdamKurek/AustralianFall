@@ -2,6 +2,7 @@
 using AustralianFall.Classes.VisualElemetns;
 using AustralianFall.Classes.VisualElemetns.MovingElements;
 using AustralianFall.Interfaces;
+using SkiaSharp;
 using System.Timers;
 #if ANDROID
 #endif
@@ -15,7 +16,6 @@ namespace AustralianFall
         bool currentlyDrawing = false;
         Screen currentScreen;
         Screen nextScreen;
-        MovementControl controller;
         int screenIndex = 0;
         public MainPage()
         {
@@ -29,8 +29,8 @@ namespace AustralianFall
             PaintSurface.EnableTouchEvents = true;
             TapGestureRecognizer rec = new TapGestureRecognizer();
             controller = new(australian);
-            currentScreen = new(screenIndex++) { australian = australian };
-            nextScreen = new(screenIndex++) { australian = australian };
+            currentScreen = new(screenIndex) { australian = australian };
+            nextScreen = new(++screenIndex) { australian = australian };
             clockerTicker = new GameLoop();
             clockerTicker.TimerElapsed += OnGameLoopTimerElapsed;
             clockerTicker.TimerElapsed += currentScreen.OnGameTick;
@@ -67,7 +67,7 @@ namespace AustralianFall
         {
             clockerTicker.TimerElapsed -= currentScreen.OnGameTick;
             currentScreen = nextScreen;
-            nextScreen = new Screen(screenIndex++) {australian = australian};
+            nextScreen = new Screen(++screenIndex) {australian = australian};
             clockerTicker.TimerElapsed += currentScreen.OnGameTick;
         }
 
@@ -136,6 +136,7 @@ namespace AustralianFall
             e.Surface.Canvas.DrawBitmap(currentScreen.getBackgroundWithTraps,0f,0f);
             currentScreen.DrawTraps(canvas);
             australian.Draw(canvas);
+            canvas.DrawText(currentScreen.levelAssets.GetType().ToString(), new(100, 100), new() { Color = SKColors.IndianRed });
             currentlyDrawing = false;
         }
         private void OnGameLoopTimerElapsed(object sender, ElapsedEventArgs e)

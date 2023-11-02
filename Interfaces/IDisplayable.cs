@@ -104,8 +104,6 @@ namespace AustralianFall.Interfaces
         {
             return DrawingRect;
         }
-        private Hitbox _hitbox;
-
         internal virtual Hitbox hitbox { get => getDefaultHitbox(); }
         internal virtual Hitbox getDefaultHitbox()
         {
@@ -117,7 +115,6 @@ namespace AustralianFall.Interfaces
             };
 
         }
-
 
         internal virtual void Flip()
         {

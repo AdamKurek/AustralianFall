@@ -28,7 +28,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
-		<DefineConstants>ShowHitboxes</DefineConstants>
+		<DefineConstants>ShowHitboxes;DebugString</DefineConstants>
 
 	</PropertyGroup>
 
@@ -54,6 +54,7 @@
 	  <None Remove="Resources\Raw\maluch.png" />
 	  <None Remove="Resources\Raw\RawImages\Backgrounds\Background1.jpg" />
 	  <None Remove="Resources\Raw\RawImages\Backgrounds\Background2.jpg" />
+	  <None Remove="Resources\Raw\RawImages\Backgrounds\Background3.jpg" />
 	  <None Remove="Resources\Raw\RawImages\DefaultBitmap.png" />
 	  <None Remove="Resources\Raw\RawImages\Entities\window.jpg" />
 	</ItemGroup>
