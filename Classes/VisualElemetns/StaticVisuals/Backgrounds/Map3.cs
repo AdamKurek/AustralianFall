@@ -16,6 +16,7 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
         internal override List<ITrap> LoadBackgroundElements()
         {
             var xd = new List<ITrap>();
+
             //xd.Add();
             return xd;
         }
@@ -24,17 +25,13 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
         {
             List<ITrap> traps = new List<ITrap>();
             List<SKRect> rects = new List<SKRect>();
-            for(int i = 0;i < 8;i++){
-                float width = (float)Random.NextDouble()*100f + 50f;
-                float height = (float)Random.NextDouble()*100f + 50f;
-                rects.Add(RectGenerator.GenerateRect(rects, width, height));
-            }
-
+            rects.Add(SKRect.Create(new SKPoint(500, 700), new SKSize(50, 70)));
             {
                 int i = 0;
                 foreach (SKRect rect in rects)
                 {
-                  //  traps.Add(new OpeningWindow(rect, i++ % 2 == 0));
+                    traps.Add(new Reflector(rect, 0));
+                    //  traps.Add(new OpeningWindow(rect, i++ % 2 == 0));
                 }
             }
 
@@ -43,7 +40,7 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
 
         internal override void loadTextures()
         {
-            //LoadBitmaps("OpeningWindow",6);
+            LoadBitmap("Reflector");
         }
     }
 }

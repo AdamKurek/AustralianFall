@@ -1,6 +1,7 @@
 ﻿using AustralianFall.Classes.Services;
 using SkiaSharp;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace AustralianFall.Interfaces
 {
@@ -17,7 +18,7 @@ namespace AustralianFall.Interfaces
         internal abstract List<ITrap> LoadMovingElements();
         internal abstract void loadTextures();
         bool texturesLoaded = false;
-        internal Hashtable bitmaps {set; get;} = new ();
+        internal Dictionary<string, List<SKBitmap>> bitmaps {set; get;} = new ();
         protected async void LoadBitmaps(string path, int count, string extention = "png")
         {
             List<SKBitmap> maps = new();
@@ -26,6 +27,12 @@ namespace AustralianFall.Interfaces
                 maps.Add(await ImageLoader.LoadBitmapAsync(resourceID));
             }
             bitmaps.Add(path,maps);
+            //bitmaps.Add(maps);
+        }
+        protected async void LoadBitmap(string path, string extention = "png")
+        {
+            string resourceID = $"RawImages/Entities/{this.GetType().Name}/{path}.{extention}";
+            bitmaps.Add(path,  new List<SKBitmap> { await ImageLoader.LoadBitmapAsync(resourceID) });
             //bitmaps.Add(maps);
         }
     }

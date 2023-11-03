@@ -24,7 +24,7 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
         {
             List<ITrap> traps = new List<ITrap>();
             List<SKRect> rects = new List<SKRect>();
-            for(int i = 0;i < 8;i++){
+            for(int i = 0;i < 1;i++){
                 float width = (float)Random.NextDouble()*100f + 50f;
                 float height = (float)Random.NextDouble()*100f + 50f;
                 rects.Add(RectGenerator.GenerateRect(rects, width, height));

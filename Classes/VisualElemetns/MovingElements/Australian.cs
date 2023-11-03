@@ -26,7 +26,7 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
 
 
         internal float xSpeed = 0f;
-        internal float ySpeed = -5f;
+        internal float ySpeed = -7f;
 
         public float X => DrawingRect.Location.X;
         public float Y => DrawingRect.Location.Y;//1000 + (ySpeed * tick);
@@ -50,7 +50,6 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
                 ChangeScreen.Invoke(this, new EventArgs());
             }
         }
-
         
 
         public void Tick(MovementControl.keyHeld direction) {

@@ -11,11 +11,14 @@ namespace AustralianFall
 {
     public partial class MainPage : ContentPage
     {
-        Australian australian;
+
+     
+    Australian australian;
         GameLoop clockerTicker;
         bool currentlyDrawing = false;
         Screen currentScreen;
         Screen nextScreen;
+        MovementControl controller;
         int screenIndex = 0;
         public MainPage()
         {

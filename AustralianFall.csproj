@@ -56,6 +56,7 @@
 	  <None Remove="Resources\Raw\RawImages\Backgrounds\Background2.jpg" />
 	  <None Remove="Resources\Raw\RawImages\Backgrounds\Background3.jpg" />
 	  <None Remove="Resources\Raw\RawImages\DefaultBitmap.png" />
+	  <None Remove="Resources\Raw\RawImages\Entities\Map2\Reflector.png" />
 	  <None Remove="Resources\Raw\RawImages\Entities\window.jpg" />
 	</ItemGroup>
 

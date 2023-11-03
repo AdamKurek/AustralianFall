@@ -16,7 +16,6 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
         internal override List<ITrap> LoadBackgroundElements()
         {
             var xd = new List<ITrap>();
-            //xd.Add();
             return xd;
         }
 
@@ -24,7 +23,7 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
         {
             List<ITrap> traps = new List<ITrap>();
             List<SKRect> rects = new List<SKRect>();
-            for(int i = 0;i < 15;i++){
+            for(int i = 0;i < 1/*5*/;i++){
                 float size = (float)Random.NextDouble() * 100f + 100f;
                 rects.Add(RectGenerator.GenerateRect(rects,size, size));
             }

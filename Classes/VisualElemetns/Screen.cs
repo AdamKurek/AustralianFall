@@ -70,7 +70,9 @@ namespace AustralianFall.Classes.VisualElemetns
                         
                         continue;
                     }
-                    animatedtrap.animationFrames = ((List<SKBitmap>)levelAssets.bitmaps[trap.GetType().Name]).ToArray();
+                    if(levelAssets.bitmaps!= null) { 
+                        animatedtrap.animationFrames = ((List<SKBitmap>)levelAssets.bitmaps[trap.GetType().Name]).ToArray();
+                    }
                 }
 
                 BindTraps();
