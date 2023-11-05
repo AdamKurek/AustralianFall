@@ -57,8 +57,8 @@
 	  <None Remove="Resources\Raw\RawImages\Backgrounds\Background3.jpg" />
 	  <None Remove="Resources\Raw\RawImages\DefaultBitmap.png" />
 	  <None Remove="Resources\Raw\RawImages\Entities\Map2\Reflector.png" />
-	  <None Remove="Resources\Raw\RawImages\Entities\Map3\lamp.png" />
-	  <None Remove="Resources\Raw\RawImages\Entities\Map3\stand.png" />
+	  <None Remove="Resources\Raw\RawImages\Entities\Map3\Reflectorlamp.png" />
+	  <None Remove="Resources\Raw\RawImages\Entities\Map3\ReflectorStand.png" />
 	  <None Remove="Resources\Raw\RawImages\Entities\window.jpg" />
 	</ItemGroup>
 

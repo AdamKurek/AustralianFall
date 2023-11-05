@@ -30,7 +30,7 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
                 int i = 0;
                 foreach (SKRect rect in rects)
                 {
-                    traps.Add(new Reflector(rect, 0));
+                    traps.Add(new ReflectorStand(rect, 0));
                     //  traps.Add(new OpeningWindow(rect, i++ % 2 == 0));
                 }
             }
@@ -40,7 +40,8 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
 
         internal override void loadTextures()
         {
-            LoadBitmap("Reflector");
+            LoadBitmap("ReflectorLamp");
+            LoadBitmap("ReflectorStand");
         }
     }
 }

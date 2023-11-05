@@ -59,7 +59,14 @@ namespace AustralianFall.Interfaces
         }
 
         private SKBitmap _Bitmap;
-        protected virtual SKBitmap Bitmap { get => _Bitmap; set => _Bitmap = flipped ? FlipBitmap(value) : value; }
+
+        protected virtual SKBitmap Bitmap
+        {
+            get => _Bitmap;  set
+            {
+                _Bitmap = flipped ? FlipBitmap(value) : value;
+            }
+        }
         internal void Resize()
         {
            // if (Width <= 0 || Height <= 0)
@@ -76,22 +83,23 @@ namespace AustralianFall.Interfaces
         }
         protected virtual void DrawMainShape(SKCanvas canvas)
         {
+            canvas.DrawBitmap(Bitmap, DrawingRectS);
+
 #if ShowHitboxes
             SKPath path = new SKPath();
 
             var polyScalled = new SKPoint[hitbox.Points.Length];
 
-            for(int i =0;i < hitbox.Points.Length;i++)
+            for(int i = 0;i < hitbox.Points.Length;i++)
             {
                 polyScalled[i] = new SKPoint(hitbox.Points[i].X * scaleX, hitbox.Points[i].Y * scaleY);
             }
 
             path.AddPoly(polyScalled);
             
-            SKPaint paint = new SKPaint() { Color= SKColors.MediumVioletRed};
+            SKPaint paint = new SKPaint() { Color = SKColors.MediumVioletRed};
             canvas.DrawPath(path, paint);
 #endif
-            canvas.DrawBitmap(Bitmap, DrawingRectS);
         }
 
         protected void AddOffset(float xSpeed, float ySpeed)
@@ -104,7 +112,7 @@ namespace AustralianFall.Interfaces
         {
             return DrawingRect;
         }
-        internal virtual Hitbox hitbox { get => getDefaultHitbox(); }
+        internal virtual Hitbox hitbox { get => getDefaultHitbox();}
         internal virtual Hitbox getDefaultHitbox()
         {
             return  new Hitbox() { Points = new SKPoint[] { 
@@ -113,7 +121,6 @@ namespace AustralianFall.Interfaces
                     new(DrawingRect.Location.X + DrawingRect.Width, DrawingRect.Location.Y + DrawingRect.Height),
                     new(DrawingRect.Location.X, DrawingRect.Location.Y + DrawingRect.Height) }
             };
-
         }
 
         internal virtual void Flip()
@@ -121,7 +128,6 @@ namespace AustralianFall.Interfaces
             Bitmap = FlipBitmap(Bitmap);
             //Bitmap = RotateBitmap(Bitmap, 180);
             //Thread.Sleep(1000);
-        
         }
         internal bool flipped = false;
         internal static SKBitmap RotateBitmap(SKBitmap bitmap, double angle)
@@ -133,9 +139,7 @@ namespace AustralianFall.Interfaces
             int originalHeight = bitmap.Height;
             int rotatedWidth = (int)(cosine * originalWidth + sine * originalHeight);
             int rotatedHeight = (int)(cosine * originalHeight + sine * originalWidth);
-
             var rotatedBitmap = new SKBitmap(rotatedWidth, rotatedHeight);
-
             using (var surface = new SKCanvas(rotatedBitmap))
             {
                 surface.Clear();
@@ -144,10 +148,8 @@ namespace AustralianFall.Interfaces
                 surface.Translate(-originalWidth / 2, -originalHeight / 2);
                 surface.DrawBitmap(bitmap, new SKPoint());
             }
-
             return rotatedBitmap;
         }
-
         internal static SKBitmap FlipBitmap(SKBitmap bitmap)
         {
             var flippedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
@@ -156,9 +158,7 @@ namespace AustralianFall.Interfaces
                 surface.Clear();
                 var matrix = SKMatrix.CreateScale(-1, 1);
                 matrix.TransX = bitmap.Width;
-
                 surface.SetMatrix(matrix);
-
                 surface.DrawBitmap(bitmap, new SKPoint());
             }
 
@@ -174,8 +174,6 @@ namespace AustralianFall.Interfaces
                 Points = hitbox;
             }
             internal SKPoint[] Points;
-
-
 
             public static Path64 SKPointArrayToPath64(SKPoint[] points)
             {

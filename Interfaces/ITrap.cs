@@ -18,6 +18,11 @@ namespace AustralianFall.Interfaces
         internal TrapState activated = TrapState.sleeping;
         internal int TickOfActivation;
         internal int activationDistance = 200;
+
+        internal void SetBitmap(SKBitmap sKBitmap)
+        {
+            Bitmap = sKBitmap;
+        }
     }
 
 }

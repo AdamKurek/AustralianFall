@@ -68,7 +68,8 @@ namespace AustralianFall.Classes.VisualElemetns
                     trap.Resize();
                     var animatedtrap = trap as IAnimatedObject;
                     if (animatedtrap == null) { 
-                        
+                      //  animatedtrap.animationFrames = ((List<SKBitmap>)levelAssets.bitmaps[trap.GetType().Name]).ToArray();
+                        trap.SetBitmap(levelAssets.bitmaps[trap.GetType().Name][0]);
                         continue;
                     }
                     if(levelAssets.bitmaps!= null) { 
