@@ -11,7 +11,7 @@ namespace AustralianFall.Interfaces
             }
             _hitboxFrames = new Hitbox[hitboxesPercentages.Length]; 
             for (int i = 0;i< hitboxesPercentages.Length;i++) {
-                SKPoint[] pts = new SKPoint[hitboxesPercentages[i].Points.Length]; 
+                SKPoint[] pts = new SKPoint[hitboxesPercentages[i].Points.Length]; // make thjis for loop using Translate Hitbox from ITRap
                 for (int j = 0;j < hitboxesPercentages[i].Points.Length; j++){
                     if (flipped)// flipped)
                     {

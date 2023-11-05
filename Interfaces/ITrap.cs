@@ -19,6 +19,15 @@ namespace AustralianFall.Interfaces
         internal int TickOfActivation;
         internal int activationDistance = 200;
 
+        protected void TranslateHitbox(Hitbox hbox, ref Hitbox newHitbox)
+        {
+            for (int i = 0; i < hbox.Points.Length; i++)
+            {
+                newHitbox.Points[i] = new SKPoint(
+                           hbox.Points[i].X * getHitboxRect().Width + getHitboxRect().Location.X,
+                           hbox.Points[i].Y * getHitboxRect().Height + getHitboxRect().Location.Y);
+            }
+        }
         internal void SetBitmap(SKBitmap sKBitmap)
         {
             Bitmap = sKBitmap;
