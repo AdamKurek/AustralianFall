@@ -25,12 +25,14 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
         {
             List<ITrap> traps = new List<ITrap>();
             List<SKRect> rects = new List<SKRect>();
-            rects.Add(SKRect.Create(new SKPoint(500, 700), new SKSize(50, 70)));
+            rects.Add(SKRect.Create(new SKPoint(900, 700), new SKSize(50, 70)));
             {
                 int i = 0;
                 foreach (SKRect rect in rects)
                 {
-                    traps.Add(new ReflectorStand(rect, 0));
+                    var xd = new ReflectorStand(rect, 0);
+                    traps.Add(xd);
+                    traps.Add(xd.laser);
                     //  traps.Add(new OpeningWindow(rect, i++ % 2 == 0));
                 }
             }
