@@ -46,9 +46,10 @@ namespace AustralianFall.Classes.VisualElemetns
                 t.Resize();
             }
         }
-        internal Screen(int level)//todo make it async loading in background
+        internal Screen(int level)
         {
-            //level = 0;/////////
+            level = 3;
+            /////////
             Type type = Type.GetType($"AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds.Map{level}");
             if (type == null){
                 type = Type.GetType("AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds.MapDefault");
