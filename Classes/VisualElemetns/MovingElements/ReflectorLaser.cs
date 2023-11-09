@@ -23,17 +23,47 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         protected override void DrawMainShape(SKCanvas canvas)
         {
 
-            var lineLength = 1000;
-            var rotationRadians = rotation * Math.PI / 180; // Convert rotation from degrees to radians
-
-            var endX = (float)(Math.Cos(rotationRadians) * lineLength * scaleX) + laserPoint.X*scaleX;
-            var endY = (float)(Math.Sin(rotationRadians) * lineLength * scaleY) + laserPoint.Y*scaleY;
-            var endPoint = new SKPoint(endX, endY);
-            using var paint = new SKPaint();
+            var lineLength = 100f;// * MathF.Cos(scaleX) * MathF.Sin(scaleY);
+            
+            
+            var paint = new SKPaint();
             paint.Style = SKPaintStyle.Stroke;
             paint.Color = SKColors.Red;
             paint.StrokeWidth = 5;
-            canvas.DrawLine(new(laserPoint.X * scaleX, laserPoint.Y * scaleY), new(endPoint.X , endPoint.Y ), paint);
+            paint.Style = SKPaintStyle.Stroke;
+
+            if (false)
+            {
+                var rotationRadians = rotation * MathF.PI / 180; 
+
+                var endX = ((MathF.Cos(rotationRadians) * lineLength) + laserPoint.X);
+                var endY = ((MathF.Sin(rotationRadians) * lineLength) + laserPoint.Y);
+                var endPoint = new SKPoint(endX * scaleX, endY * scaleY);
+                canvas.DrawLine(new(laserPoint.X * scaleX, laserPoint.Y * scaleY), new(endPoint.X, endPoint.Y), paint);
+                return;
+            }
+
+            var rotationRadiansL = (rotation +20) * MathF.PI / 180; 
+            var rotationRadiansR = (rotation -20) * MathF.PI / 180;
+
+            var endXL = ((MathF.Cos(rotationRadiansL) * lineLength) + laserPoint.X);
+            var endYL = ((MathF.Sin(rotationRadiansL) * lineLength) + laserPoint.Y);
+            var endXR = ((MathF.Cos(rotationRadiansR) * lineLength) + laserPoint.X);
+            var endYR = ((MathF.Sin(rotationRadiansR) * lineLength) + laserPoint.Y);
+
+            var trianglePoints = new SKPoint[]
+            {
+                new SKPoint(laserPoint.X * scaleX, laserPoint.Y * scaleY),
+                new SKPoint(endXL* scaleX, endYL * scaleY),
+                new SKPoint(endXR* scaleX, endYR * scaleY)
+            };
+
+            SKPath path = new SKPath();
+            path.AddPoly(trianglePoints);
+
+         
+            canvas.DrawPath(path, paint);
+
         }
         //canvas.DrawLine(
         //    new(laserPoint.X * scaleX, laserPoint.Y * scaleY),
@@ -51,7 +81,5 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         {
             return true;
         }
-
-        float laserRotation = 0;
     }
 }
