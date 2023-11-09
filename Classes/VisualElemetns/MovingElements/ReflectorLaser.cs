@@ -52,10 +52,10 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         float endXR;
         float endYR;
         internal override Hitbox hitbox => new(laserWidth<3? Array.Empty<SKPoint>() : new SKPoint[] {
-        new(laserPoint.X, laserPoint.Y),
-        new(endXL,endYL),
-        new(endXR,endYR),
-        } ) ;
+            new(laserPoint.X, laserPoint.Y),
+            new(endXL,endYL),
+            new(endXR,endYR),
+        });
         public void Tick()
         {
             rotation--;

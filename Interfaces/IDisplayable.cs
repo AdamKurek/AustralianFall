@@ -1,6 +1,5 @@
 ﻿using Clipper2Lib;
 using SkiaSharp;
-using System.Diagnostics.Tracing;
 
 namespace AustralianFall.Interfaces
 {
@@ -103,7 +102,7 @@ namespace AustralianFall.Interfaces
 #endif
         }
 
-        protected void AddOffset(float xSpeed, float ySpeed)
+        protected virtual void AddOffset(float xSpeed, float ySpeed)
         {
             _DrawingRect.Offset(xSpeed, ySpeed);
             _DrawingRectS.Offset(xSpeed * scaleX, ySpeed*scaleY);
@@ -175,7 +174,15 @@ namespace AustralianFall.Interfaces
                 Points = hitbox;
             }
             internal SKPoint[] Points;
-
+            public static Hitbox operator +(Hitbox a, SKPoint b)
+            {
+                var newlist = new SKPoint[a.Points.Length];
+                for(int i = 0;i<a.Points.Length;i++)
+                {
+                    newlist[i] = new(a.Points[i].X + b.X, a.Points[i].Y + b.Y);
+                }
+                return new Hitbox(newlist);
+            }
             public static Path64 SKPointArrayToPath64(SKPoint[] points)
             {
                 Path64 path = new Path64();

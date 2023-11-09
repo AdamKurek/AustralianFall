@@ -74,7 +74,7 @@ namespace AustralianFall.Interfaces
             flipped = true;
         }
 
-        public void Tick()
+        public virtual void Tick()
         {
             switch (activated)
             {

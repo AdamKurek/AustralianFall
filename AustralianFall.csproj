@@ -28,7 +28,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
-		<DefineConstants>ShowHitboxes;DebugString</DefineConstants>
+		<DefineConstants>nShowHitboxes;nDebugString</DefineConstants>
 
 	</PropertyGroup>
 
@@ -55,10 +55,15 @@
 	  <None Remove="Resources\Raw\RawImages\Backgrounds\Background1.jpg" />
 	  <None Remove="Resources\Raw\RawImages\Backgrounds\Background2.jpg" />
 	  <None Remove="Resources\Raw\RawImages\Backgrounds\Background3.jpg" />
+	  <None Remove="Resources\Raw\RawImages\Backgrounds\Background4.jpg" />
 	  <None Remove="Resources\Raw\RawImages\DefaultBitmap.png" />
 	  <None Remove="Resources\Raw\RawImages\Entities\Map2\Reflector.png" />
 	  <None Remove="Resources\Raw\RawImages\Entities\Map3\Reflectorlamp.png" />
 	  <None Remove="Resources\Raw\RawImages\Entities\Map3\ReflectorStand.png" />
+	  <None Remove="Resources\Raw\RawImages\Entities\Map4\Plane0.png" />
+	  <None Remove="Resources\Raw\RawImages\Entities\Map4\Plane1.png" />
+	  <None Remove="Resources\Raw\RawImages\Entities\Map4\Plane2.png" />
+	  <None Remove="Resources\Raw\RawImages\Entities\Map4\Plane3.png" />
 	  <None Remove="Resources\Raw\RawImages\Entities\window.jpg" />
 	</ItemGroup>
 
