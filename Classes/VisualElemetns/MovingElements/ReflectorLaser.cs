@@ -22,17 +22,19 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         }
         protected override void DrawMainShape(SKCanvas canvas)
         {
-
-            var lineLength = 100f;// * MathF.Cos(scaleX) * MathF.Sin(scaleY);
-            
             
             var paint = new SKPaint();
-            paint.Style = SKPaintStyle.Stroke;
-            paint.Color = SKColors.Red;
             paint.StrokeWidth = 5;
-            paint.Style = SKPaintStyle.Stroke;
+            paint.Style = SKPaintStyle.StrokeAndFill;
+            
+            if(laserWidth < 3)
+            {
+                paint.Color = new SKColor(255, 255, 255, 128);
+            }else{
+                paint.Color = new SKColor(240, 20, 10, 216);
+            }
 
-            if (false)
+            if (endXL == 0)
             {
                 var rotationRadians = rotation * MathF.PI / 180; 
 
@@ -43,14 +45,6 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
                 return;
             }
 
-            var rotationRadiansL = (rotation +20) * MathF.PI / 180; 
-            var rotationRadiansR = (rotation -20) * MathF.PI / 180;
-
-            var endXL = ((MathF.Cos(rotationRadiansL) * lineLength) + laserPoint.X);
-            var endYL = ((MathF.Sin(rotationRadiansL) * lineLength) + laserPoint.Y);
-            var endXR = ((MathF.Cos(rotationRadiansR) * lineLength) + laserPoint.X);
-            var endYR = ((MathF.Sin(rotationRadiansR) * lineLength) + laserPoint.Y);
-
             var trianglePoints = new SKPoint[]
             {
                 new SKPoint(laserPoint.X * scaleX, laserPoint.Y * scaleY),
@@ -58,25 +52,51 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
                 new SKPoint(endXR* scaleX, endYR * scaleY)
             };
 
+            
             SKPath path = new SKPath();
             path.AddPoly(trianglePoints);
 
-         
+            
             canvas.DrawPath(path, paint);
 
         }
-        //canvas.DrawLine(
-        //    new(laserPoint.X * scaleX, laserPoint.Y * scaleY),
-        //    new SKPoint(800 * scaleX, 0),
-        //    new SKPaint() { StrokeWidth = 10, Color = SKColors.Red });
-        //canvas.DrawCircle(new(laserPoint.X * IDisplayable.canvasWidth, laserPoint.Y * IDisplayable.canvasHeight), 30, new SKPaint() { Color = SKColors.AliceBlue });
+        internal float lineLength = 1000f;
+        float laserWidth =0;
+        bool laserGrowing = true;
+        float endXL;
+        float endYL;
+        float endXR;
+        float endYR;
 
         public void Tick()
         {
             rotation--;
 
-        }
+            if(laserGrowing)
+            {
+                laserWidth += 0.25f;
+                if (laserWidth > 5) {
+                    laserGrowing = false;   
+                }
+            }
+            else
+            {
+                laserWidth -= 0.25f;
+                if (laserWidth <= 0)
+                {
+                    laserGrowing = true;
+                }
+            }
 
+            var rotationRadiansL = (rotation + laserWidth) * MathF.PI / 180;
+            var rotationRadiansR = (rotation - laserWidth) * MathF.PI / 180;
+
+            endXL = ((MathF.Cos(rotationRadiansL) * lineLength) + laserPoint.X);
+            endYL = ((MathF.Sin(rotationRadiansL) * lineLength) + laserPoint.Y);
+            endXR = ((MathF.Cos(rotationRadiansR) * lineLength) + laserPoint.X);
+            endYR = ((MathF.Sin(rotationRadiansR) * lineLength) + laserPoint.Y);
+        }
+        
         public override bool DoesIntersectWithRect(SKRect rc)
         {
             return true;
