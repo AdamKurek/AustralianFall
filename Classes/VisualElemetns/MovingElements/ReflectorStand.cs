@@ -13,7 +13,7 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
     {
         public ReflectorStand(SKRect rc):base(rc)
         {
-            laser = new ReflectorLamp(
+            Lamp = new ReflectorLamp(
                 
                 SKRect.Create(x:rc.Left+ rc.Width / 4, y:rc.Top - rc.Height / 4, width:rc.Width/2,height:rc.Height * 3 / 4)
                 , new());
@@ -27,7 +27,7 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
             
         }
 
-        public ReflectorLamp laser;
+        public ReflectorLamp Lamp;
 
 
         //internal override Hitbox hitbox => new Hitbox(new[] { new SKPoint(0.17502187f, 0.91523373f), new SKPoint(0.5417344f, 0.97624934f), new SKPoint(0.82093596f, 0.9046224f), new SKPoint(0.61674374f, 0.83564824f), new SKPoint(0.58340627f, 0.6526015f), new SKPoint(0.9542859f, 0.39527488f), new SKPoint(0.85844064f, 0.12733687f), new SKPoint(0.5750719f, 0.01856996f), new SKPoint(0.08334375f, 0.22018667f), new SKPoint(0.075009376f, 0.45629045f), new SKPoint(0.28753594f, 0.5942387f), new SKPoint(0.2667f, 0.67647713f), new SKPoint(0.4375547f, 0.68708855f), new SKPoint(0.4417219f, 0.71892273f), new SKPoint(0.39171562f, 0.7481041f), new SKPoint(0.37504688f, 0.83034253f) });

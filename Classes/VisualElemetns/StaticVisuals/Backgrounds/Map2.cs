@@ -32,7 +32,7 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
                 int i = 0;
                 foreach (SKRect rect in rects)
                 {
-                    traps.Add(new OpeningWindow(rect, i++ % 2 == 0 ? true : false));
+                    traps.Add(new OpeningWindow(rect, i++ % 2 == 0));
                 }
             }
 

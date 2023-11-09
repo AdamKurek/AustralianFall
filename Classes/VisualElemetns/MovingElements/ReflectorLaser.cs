@@ -9,30 +9,35 @@ using System.Threading.Tasks;
 
 namespace AustralianFall.Classes.VisualElemetns.MovingElements
 {
-    internal class ReflectorLamp: ITrap, ITickable
+    internal class ReflectorLaser: ITrap, ITickable
     {
         int rotation = 0;
+        
         SKPoint laserPoint;
-        public ReflectorLamp(SKRect sKrc, SKPoint centre, bool flip = false) : base(sKrc)
+        public ReflectorLaser(SKPoint centre, bool flip = false) : base()
         {
 
             //laserPoint = centre;
-            laserPoint = new(getHitboxRect().MidX, getHitboxRect().MidY);
+            laserPoint = centre;
         }
         protected override void DrawMainShape(SKCanvas canvas)
         {
-            base.DrawMainShape(canvas);
-            SKMatrix rotationMatrix = SKMatrix.CreateRotationDegrees(rotation);
-            float xTranslate = DrawingRectS.Width / 2 + DrawingRectS.Left;
-            float yTranslate = DrawingRectS.Height / 2 + DrawingRectS.Top;
-            SKMatrix totalMatrix = SKMatrix.MakeTranslation(-xTranslate, -yTranslate);
-            totalMatrix = totalMatrix.PostConcat(rotationMatrix);
-            totalMatrix = totalMatrix.PostConcat(SKMatrix.MakeTranslation(xTranslate, yTranslate));
-            canvas.Concat(ref totalMatrix);
-            canvas.DrawBitmap(Bitmap, DrawingRectS);
-            canvas.ResetMatrix();
-            canvas.DrawPoint(new(xTranslate, yTranslate), SKColors.Red);
-         }
+
+            var lineLength = 1000;
+            var rotationRadians = rotation * Math.PI / 180; // Convert rotation from degrees to radians
+
+            var endX = (float)(Math.Cos(rotationRadians) * lineLength + laserPoint.X);
+            var endY = (float)(Math.Sin(rotationRadians) * lineLength + laserPoint.Y);
+            var endPoint = new SKPoint(endX, endY);
+
+            using (var paint = new SKPaint())
+            {
+                paint.Style = SKPaintStyle.Stroke;
+                paint.Color = SKColors.Red;
+                paint.StrokeWidth = 5;
+                canvas.DrawLine(new(laserPoint.X*scaleX,laserPoint.Y*scaleY), new(endPoint.X,endPoint.Y), paint);
+            }
+        }
         //canvas.DrawLine(
         //    new(laserPoint.X * scaleX, laserPoint.Y * scaleY),
         //    new SKPoint(800 * scaleX, 0),
@@ -41,8 +46,13 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
 
         public void Tick()
         {
-            rotation++;
+            rotation--;
 
+        }
+
+        public override bool DoesIntersectWithRect(SKRect rc)
+        {
+            return true;
         }
 
         float laserRotation = 0;

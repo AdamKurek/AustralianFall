@@ -55,36 +55,27 @@ namespace AustralianFall.Classes.VisualElemetns
                 type = Type.GetType("AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds.MapDefault");
             }
             levelAssets = (ILevelAssets)Activator.CreateInstance(type);
-            
-          
             {
                 staticBitmap = levelAssets.LoadBackground();
                 levelAssets.loadTextures();
-
-                
                 Traps = levelAssets.LoadMovingElements();
-
                 foreach(ITrap trap in Traps) {
                     trap.Resize();
-                    var animatedtrap = trap as IAnimatedObject;
-                    if (animatedtrap == null) { 
-                      //  animatedtrap.animationFrames = ((List<SKBitmap>)levelAssets.bitmaps[trap.GetType().Name]).ToArray();
-                        trap.SetBitmap(levelAssets.bitmaps[trap.GetType().Name][0]);
-                        continue;
-                    }
-                    if(levelAssets.bitmaps!= null) { 
-                        animatedtrap.animationFrames = ((List<SKBitmap>)levelAssets.bitmaps[trap.GetType().Name]).ToArray();
+                    if (levelAssets.bitmaps.ContainsKey(trap.GetType().Name)){
+                        var animatedtrap = trap as IAnimatedObject;
+                        if (animatedtrap == null){
+                            //  animatedtrap.animationFrames = ((List<SKBitmap>)levelAssets.bitmaps[trap.GetType().Name]).ToArray();
+                            trap.SetBitmap(levelAssets.bitmaps[trap.GetType().Name][0]);
+                            continue;
+                        }
+                        if (levelAssets.bitmaps != null){
+                            animatedtrap.animationFrames = ((List<SKBitmap>)levelAssets.bitmaps[trap.GetType().Name]).ToArray();
+                        }
                     }
                 }
-
                 BindTraps();
                 resize();
-               
             }
-
-
-
-
         }
         internal void OnGameTick(object sender, ElapsedEventArgs e)
         {
@@ -113,7 +104,7 @@ namespace AustralianFall.Classes.VisualElemetns
 
         internal void checkColisions(){
             foreach(var t in Traps){
-                if (t.getHitboxRect().IntersectsWith(australian.getHitboxRect())) {
+                if (t.DoesIntersectWithRect(australian.getHitboxRect())) {
                     IDisplayable.Hitbox[] lsss = new IDisplayable.Hitbox[1];
                     lsss[0] = australian.hitbox;
                     if (IDisplayable.Hitbox.calculateCommonArea(t.hitbox, lsss) >10) { 

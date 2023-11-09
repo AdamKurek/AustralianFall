@@ -8,6 +8,9 @@ namespace AustralianFall.Interfaces
         internal enum TrapState { 
             sleeping, active, done
         }
+        protected ITrap() : base()
+        {
+        }
         protected ITrap(SKRect rc):base(rc)
         {
         }
@@ -26,6 +29,10 @@ namespace AustralianFall.Interfaces
         }
         internal void SetBitmap(SKBitmap sKBitmap){
             Bitmap = sKBitmap;
+        }
+
+        public virtual bool DoesIntersectWithRect(SKRect rc) {
+            return getHitboxRect().IntersectsWith(rc);
         }
     }
 

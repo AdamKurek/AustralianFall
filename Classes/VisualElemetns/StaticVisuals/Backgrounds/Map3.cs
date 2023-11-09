@@ -16,8 +16,6 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
         internal override List<ITrap> LoadBackgroundElements()
         {
             var xd = new List<ITrap>();
-
-            //xd.Add();
             return xd;
         }
 
@@ -32,7 +30,8 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
                 foreach (SKRect rect in rects)
                 {
                     var xd = new ReflectorStand(rect);
-                    traps.Add(xd.laser);
+                    traps.Add(xd.Lamp.Laser);
+                    traps.Add(xd.Lamp);
                     traps.Add(xd);
                     //  traps.Add(new OpeningWindow(rect, i++ % 2 == 0));
                 }

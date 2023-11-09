@@ -7,6 +7,7 @@ namespace AustralianFall.Interfaces
 
     internal abstract class IDisplayable : SKDrawable
     {
+        protected IDisplayable(){}
         protected IDisplayable(SKRect rc) 
         {
             _DrawingRect = rc;
