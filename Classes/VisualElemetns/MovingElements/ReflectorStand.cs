@@ -11,12 +11,14 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
 {
     internal class ReflectorStand : ITrap
     {
-        public ReflectorStand(SKRect rc, int rotation = 0):base(rc)
+        public ReflectorStand(SKRect rc):base(rc)
         {
-            laser = new ReflectorLamp(new SKRect(0, 0, IDisplayable.canvasWidth, rc.MidY), 
-                new(getHitboxRect().MidX, getHitboxRect().MidY));
+            laser = new ReflectorLamp(
+                
+                SKRect.Create(x:rc.Left+ rc.Width / 4, y:rc.Top - rc.Height / 4, width:rc.Width/2,height:rc.Height * 3 / 4)
+                , new());
 
-        var hbox = new Hitbox(new[] { new SKPoint(0.16668752f, 0.8996452f), new SKPoint(0.44450006f, 0.71737945f), new SKPoint(0.27781254f, 0.59353215f), new SKPoint(0.5679723f, 0.47669512f), new SKPoint(0.54636467f, 0.08178593f), new SKPoint(0.70996535f, 0.08412267f), new SKPoint(0.70996535f, 0.55848104f), new SKPoint(0.5617987f, 0.60755265f), new SKPoint(0.60501397f, 0.8178593f), new SKPoint(0.7963959f, 0.91833913f) });
+            var hbox = new Hitbox(new[] { new SKPoint(0.16668752f, 0.8996452f), new SKPoint(0.44450006f, 0.71737945f), new SKPoint(0.27781254f, 0.59353215f), new SKPoint(0.5679723f, 0.47669512f), new SKPoint(0.54636467f, 0.08178593f), new SKPoint(0.70996535f, 0.08412267f), new SKPoint(0.70996535f, 0.55848104f), new SKPoint(0.5617987f, 0.60755265f), new SKPoint(0.60501397f, 0.8178593f), new SKPoint(0.7963959f, 0.91833913f) });
             staticHitbox = new();
             staticHitbox.Points = new SKPoint[hbox.Points.Length];
 
@@ -39,7 +41,6 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         {
             base.DrawMainShape(canvas);
             //laser.Draw(canvas);
-
 #if ShowHitboxes
             SKPath path = new SKPath();
             var polyScalled = new SKPoint[hitbox.Points.Length];
@@ -53,7 +54,6 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
             paint.Color = SKColors.CadetBlue;
             canvas.DrawPoint(new(RotationPoint.X * scaleX, RotationPoint.Y * scaleY), paint);
 #endif
-
         }
       
 

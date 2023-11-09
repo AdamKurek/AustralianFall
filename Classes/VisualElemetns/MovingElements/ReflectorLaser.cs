@@ -11,38 +11,37 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
 {
     internal class ReflectorLamp: ITrap, ITickable
     {
+        int rotation = 0;
         SKPoint laserPoint;
         public ReflectorLamp(SKRect sKrc, SKPoint centre, bool flip = false) : base(sKrc)
         {
-            laserPoint = centre;
+
+            //laserPoint = centre;
+            laserPoint = new(getHitboxRect().MidX, getHitboxRect().MidY);
         }
         protected override void DrawMainShape(SKCanvas canvas)
         {
-            SKMatrix rotationMatrix = SKMatrix.CreateRotationDegrees(45);
-
-            // Calculate the center of the image
-            float xTranslate = Bitmap.Width / 2;
-            float yTranslate = Bitmap.Height / 2;
-
-            // Create the total transformation matrix
+            base.DrawMainShape(canvas);
+            SKMatrix rotationMatrix = SKMatrix.CreateRotationDegrees(rotation);
+            float xTranslate = DrawingRectS.Width / 2 + DrawingRectS.Left;
+            float yTranslate = DrawingRectS.Height / 2 + DrawingRectS.Top;
             SKMatrix totalMatrix = SKMatrix.MakeTranslation(-xTranslate, -yTranslate);
             totalMatrix = totalMatrix.PostConcat(rotationMatrix);
             totalMatrix = totalMatrix.PostConcat(SKMatrix.MakeTranslation(xTranslate, yTranslate));
-
-            // Apply the transformation to the canvas
             canvas.Concat(ref totalMatrix);
-
-            // Draw the bitmap
-            canvas.DrawBitmap(Bitmap, 0, 0);
-            //canvas.DrawLine(
-            //    new(laserPoint.X * scaleX, laserPoint.Y * scaleY),
-            //    new SKPoint(800 * scaleX, 0),
-            //    new SKPaint() { StrokeWidth = 10, Color = SKColors.Red });
-            //canvas.DrawCircle(new(laserPoint.X * IDisplayable.canvasWidth, laserPoint.Y * IDisplayable.canvasHeight), 30, new SKPaint() { Color = SKColors.AliceBlue });
-        }
+            canvas.DrawBitmap(Bitmap, DrawingRectS);
+            canvas.ResetMatrix();
+            canvas.DrawPoint(new(xTranslate, yTranslate), SKColors.Red);
+         }
+        //canvas.DrawLine(
+        //    new(laserPoint.X * scaleX, laserPoint.Y * scaleY),
+        //    new SKPoint(800 * scaleX, 0),
+        //    new SKPaint() { StrokeWidth = 10, Color = SKColors.Red });
+        //canvas.DrawCircle(new(laserPoint.X * IDisplayable.canvasWidth, laserPoint.Y * IDisplayable.canvasHeight), 30, new SKPaint() { Color = SKColors.AliceBlue });
 
         public void Tick()
         {
+            rotation++;
 
         }
 
