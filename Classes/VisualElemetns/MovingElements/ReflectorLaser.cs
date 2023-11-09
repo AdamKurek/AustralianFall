@@ -11,7 +11,7 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
 {
     internal class ReflectorLaser: ITrap, ITickable
     {
-        int rotation = 0;
+        int rotation = -30;
         
         SKPoint laserPoint;
         public ReflectorLaser(SKPoint centre, bool flip = false) : base()
@@ -26,17 +26,14 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
             var lineLength = 1000;
             var rotationRadians = rotation * Math.PI / 180; // Convert rotation from degrees to radians
 
-            var endX = (float)(Math.Cos(rotationRadians) * lineLength + laserPoint.X);
-            var endY = (float)(Math.Sin(rotationRadians) * lineLength + laserPoint.Y);
+            var endX = (float)(Math.Cos(rotationRadians) * lineLength * scaleX) + laserPoint.X*scaleX;
+            var endY = (float)(Math.Sin(rotationRadians) * lineLength * scaleY) + laserPoint.Y*scaleY;
             var endPoint = new SKPoint(endX, endY);
-
-            using (var paint = new SKPaint())
-            {
-                paint.Style = SKPaintStyle.Stroke;
-                paint.Color = SKColors.Red;
-                paint.StrokeWidth = 5;
-                canvas.DrawLine(new(laserPoint.X*scaleX,laserPoint.Y*scaleY), new(endPoint.X,endPoint.Y), paint);
-            }
+            using var paint = new SKPaint();
+            paint.Style = SKPaintStyle.Stroke;
+            paint.Color = SKColors.Red;
+            paint.StrokeWidth = 5;
+            canvas.DrawLine(new(laserPoint.X * scaleX, laserPoint.Y * scaleY), new(endPoint.X , endPoint.Y ), paint);
         }
         //canvas.DrawLine(
         //    new(laserPoint.X * scaleX, laserPoint.Y * scaleY),

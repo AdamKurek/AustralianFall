@@ -27,9 +27,9 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
             SKMatrix rotationMatrix = SKMatrix.CreateRotationDegrees(rotation);
             float xTranslate = DrawingRectS.Width / 2 + DrawingRectS.Left;
             float yTranslate = DrawingRectS.Height / 2 + DrawingRectS.Top;
-            SKMatrix totalMatrix = SKMatrix.MakeTranslation(-xTranslate, -yTranslate);
+            SKMatrix totalMatrix = SKMatrix.CreateTranslation(-xTranslate, -yTranslate);
             totalMatrix = totalMatrix.PostConcat(rotationMatrix);
-            totalMatrix = totalMatrix.PostConcat(SKMatrix.MakeTranslation(xTranslate, yTranslate));
+            totalMatrix = totalMatrix.PostConcat(SKMatrix.CreateTranslation(xTranslate, yTranslate));
             canvas.Concat(ref totalMatrix);
             canvas.DrawBitmap(Bitmap, DrawingRectS);
             canvas.ResetMatrix();
