@@ -1,11 +1,5 @@
 ﻿using AustralianFall.Interfaces;
 using SkiaSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AustralianFall.Classes.VisualElemetns.MovingElements
 {
@@ -22,52 +16,46 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         }
         protected override void DrawMainShape(SKCanvas canvas)
         {
-            
             var paint = new SKPaint();
             paint.StrokeWidth = 5;
             paint.Style = SKPaintStyle.StrokeAndFill;
-            
             if(laserWidth < 3)
             {
                 paint.Color = new SKColor(255, 255, 255, 128);
             }else{
                 paint.Color = new SKColor(240, 20, 10, 216);
             }
-
             if (endXL == 0)
             {
                 var rotationRadians = rotation * MathF.PI / 180; 
-
                 var endX = ((MathF.Cos(rotationRadians) * lineLength) + laserPoint.X);
                 var endY = ((MathF.Sin(rotationRadians) * lineLength) + laserPoint.Y);
                 var endPoint = new SKPoint(endX * scaleX, endY * scaleY);
                 canvas.DrawLine(new(laserPoint.X * scaleX, laserPoint.Y * scaleY), new(endPoint.X, endPoint.Y), paint);
                 return;
             }
-
             var trianglePoints = new SKPoint[]
             {
                 new SKPoint(laserPoint.X * scaleX, laserPoint.Y * scaleY),
                 new SKPoint(endXL* scaleX, endYL * scaleY),
                 new SKPoint(endXR* scaleX, endYR * scaleY)
             };
-
-            
             SKPath path = new SKPath();
             path.AddPoly(trianglePoints);
-
-            
             canvas.DrawPath(path, paint);
-
         }
-        internal float lineLength = 1000f;
-        float laserWidth =0;
+        internal float lineLength = 1500f;
+        float laserWidth = 0;
         bool laserGrowing = true;
         float endXL;
         float endYL;
         float endXR;
         float endYR;
-
+        internal override Hitbox hitbox => new(laserWidth<3? Array.Empty<SKPoint>() : new SKPoint[] {
+        new(laserPoint.X, laserPoint.Y),
+        new(endXL,endYL),
+        new(endXR,endYR),
+        } ) ;
         public void Tick()
         {
             rotation--;
