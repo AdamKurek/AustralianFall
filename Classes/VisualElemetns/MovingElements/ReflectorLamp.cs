@@ -23,18 +23,14 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         }
         protected override void DrawMainShape(SKCanvas canvas)
         {
-            base.DrawMainShape(canvas);
-            SKMatrix rotationMatrix = SKMatrix.CreateRotationDegrees(rotation);
-            float xTranslate = DrawingRectS.Width / 2 + DrawingRectS.Left;
-            float yTranslate = DrawingRectS.Height / 2 + DrawingRectS.Top;
-            SKMatrix totalMatrix = SKMatrix.CreateTranslation(-xTranslate, -yTranslate);
-            totalMatrix = totalMatrix.PostConcat(rotationMatrix);
-            totalMatrix = totalMatrix.PostConcat(SKMatrix.CreateTranslation(xTranslate, yTranslate));
-            canvas.Concat(ref totalMatrix);
-            canvas.DrawBitmap(Bitmap, DrawingRectS);
-            canvas.ResetMatrix();
-            canvas.DrawPoint(new(xTranslate, yTranslate), SKColors.Red);
+            DrawRotated(canvas,rotation,new(DrawingRectS.Width / 2 + DrawingRectS.Left, DrawingRectS.Height / 2 + DrawingRectS.Top));
+#if ShowHitboxes
+            canvas.DrawPoint(new(xTranslate, yTranslate), SKColors.Blue);
+#endif
          }
+
+       
+
         //canvas.DrawLine(
         //    new(laserPoint.X * scaleX, laserPoint.Y * scaleY),
         //    new SKPoint(800 * scaleX, 0),

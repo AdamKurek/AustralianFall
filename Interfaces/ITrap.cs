@@ -34,6 +34,20 @@ namespace AustralianFall.Interfaces
         public virtual bool DoesIntersectWithRect(SKRect rc) {
             return getHitboxRect().IntersectsWith(rc);
         }
+
+        protected void DrawRotated(SKCanvas canvas, float rotation, SKPoint translate)
+        {
+            SKMatrix rotationMatrix = SKMatrix.CreateRotationDegrees(rotation);
+            //float xTranslate = DrawingRectS.Width / 2 + DrawingRectS.Left;
+            //float yTranslate = DrawingRectS.Height / 2 + DrawingRectS.Top;
+            SKMatrix totalMatrix = SKMatrix.CreateTranslation(-translate.X, -translate.Y);
+            totalMatrix = totalMatrix.PostConcat(rotationMatrix);
+            totalMatrix = totalMatrix.PostConcat(SKMatrix.CreateTranslation(translate.X, translate.Y));
+            canvas.Concat(ref totalMatrix);
+            //canvas.DrawBitmap(Bitmap, DrawingRectS);
+            base.DrawMainShape(canvas);
+            canvas.ResetMatrix();
+        }
     }
 
 }

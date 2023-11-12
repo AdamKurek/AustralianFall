@@ -48,7 +48,8 @@ namespace AustralianFall.Classes.VisualElemetns
         }
         internal Screen(int level)
         {
-            level = 4;
+            if(level!=0)
+            level = 5;
             /////////
             Type type = Type.GetType($"AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds.Map{level}");
             if (type == null){
@@ -103,6 +104,9 @@ namespace AustralianFall.Classes.VisualElemetns
         }
 
         internal void checkColisions(){
+            var xd =australian.getHitboxRect().Location.Y;
+            if (australian.getHitboxRect().Location.Y>700) { return; }
+            
             foreach(var t in Traps){
                 if (t.DoesIntersectWithRect(australian.getHitboxRect())) {
                     IDisplayable.Hitbox[] lsss = new IDisplayable.Hitbox[1];

@@ -23,7 +23,7 @@ namespace AustralianFall.Classes.VisualElemetns.StaticVisuals.Backgrounds
         {
             List<ITrap> traps = new List<ITrap>();
             List<SKRect> rects = new List<SKRect>();
-            for(int i = 0;i < 1/*5*/;i++){
+            for(int i = 0;i < 8;i++){
                 float size = (float)Random.NextDouble() * 100f + 100f;
                 rects.Add(RectGenerator.GenerateRect(rects,size, size));
             }

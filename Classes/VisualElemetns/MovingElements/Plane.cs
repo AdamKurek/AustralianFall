@@ -24,7 +24,6 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         internal override Hitbox hitbox => base.hitbox+new SKPoint(totalMove,0);
         public override void Tick()
         {
-
             currentState = screen.tick/20%4;
             AddOffset(flipped?Speed:-Speed, 0f);
         }

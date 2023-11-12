@@ -41,7 +41,7 @@ namespace AustralianFall.Interfaces
             get{
                 return _animationFrames[currentState];
             }
-            set => base.Bitmap = value;
+            set => _animationFrames[0] = value;
         }
 
         private SKBitmap[] _animationFrames;
