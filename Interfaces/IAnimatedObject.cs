@@ -30,7 +30,7 @@ namespace AustralianFall.Interfaces
             }
         }
         public int States { get; protected set; }
-        private int _currentState =0;
+        private int _currentState = 0;
         internal int currentState { get => _currentState;
             set{
                 _currentState = value;

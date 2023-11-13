@@ -27,9 +27,10 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         {
             //base.DrawMainShape(canvas);
             DrawRotated(canvas, rotation,new(DrawingRectS.Width / 2 + DrawingRectS.Left, DrawingRectS.Height / 2 + DrawingRectS.Top));
+
         }
 
-        internal override Hitbox hitbox => base.hitbox + new SKPoint(totalMoveX, totalMoveY);
+        internal override Hitbox hitbox => Hitbox.Rotated(base.hitbox + new SKPoint(totalMoveX, totalMoveY), new(getHitboxRect().Width / 2 + getHitboxRect().Left, getHitboxRect().Height / 2 + getHitboxRect().Top), rotation);
 
 
         bool goesRight = true;

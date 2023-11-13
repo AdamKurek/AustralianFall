@@ -25,7 +25,7 @@ namespace AustralianFall.Classes.VisualElemetns.MovingElements
         {
             DrawRotated(canvas,rotation,new(DrawingRectS.Width / 2 + DrawingRectS.Left, DrawingRectS.Height / 2 + DrawingRectS.Top));
 #if ShowHitboxes
-            canvas.DrawPoint(new(xTranslate, yTranslate), SKColors.Blue);
+            canvas.DrawPoint(new(DrawingRectS.Width / 2 + DrawingRectS.Left, DrawingRectS.Height / 2 + DrawingRectS.Top), SKColors.Blue);
 #endif
          }
 

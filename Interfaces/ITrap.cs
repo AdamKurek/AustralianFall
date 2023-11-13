@@ -44,9 +44,26 @@ namespace AustralianFall.Interfaces
             totalMatrix = totalMatrix.PostConcat(rotationMatrix);
             totalMatrix = totalMatrix.PostConcat(SKMatrix.CreateTranslation(translate.X, translate.Y));
             canvas.Concat(ref totalMatrix);
-            //canvas.DrawBitmap(Bitmap, DrawingRectS);
-            base.DrawMainShape(canvas);
+            canvas.DrawBitmap(Bitmap, DrawingRectS);
+            //base.DrawMainShape(canvas);
             canvas.ResetMatrix();
+
+#if ShowHitboxes
+            SKPath path = new SKPath();
+
+            var polyScalled = new SKPoint[hitbox.Points.Length];
+
+            for (int i = 0; i < hitbox.Points.Length; i++)
+            {
+                polyScalled[i] = new SKPoint(hitbox.Points[i].X * scaleX, hitbox.Points[i].Y * scaleY);
+            }
+
+            path.AddPoly(polyScalled);
+
+            SKPaint paint = new SKPaint() { Color = SKColors.MediumVioletRed };
+            canvas.DrawPath(path, paint);
+#endif
+
         }
     }
 

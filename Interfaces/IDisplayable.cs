@@ -1,5 +1,6 @@
 ﻿using Clipper2Lib;
 using SkiaSharp;
+using System;
 
 namespace AustralianFall.Interfaces
 {
@@ -183,6 +184,26 @@ namespace AustralianFall.Interfaces
                 }
                 return new Hitbox(newlist);
             }
+
+            public static Hitbox Rotated(Hitbox target, SKPoint center, float angleDegrees)
+            {
+                float angleRadians = angleDegrees / 180 * MathF.PI;
+
+                SKPoint[] rotatedPoints = new SKPoint[target.Points.Length];
+
+                for (int i = 0; i < target.Points.Length; i++)
+                {
+                    float xOffset = target.Points[i].X - center.X;
+                    float yOffset = target.Points[i].Y - center.Y;
+
+                    float rotatedX = center.X + (xOffset * MathF.Cos(angleRadians) - yOffset * MathF.Sin(angleRadians));
+                    float rotatedY = center.Y + (xOffset * MathF.Sin(angleRadians) + yOffset * MathF.Cos(angleRadians));
+
+                    rotatedPoints[i] = new SKPoint(rotatedX, rotatedY);
+                }
+
+                return new(rotatedPoints);
+            }
             public static Path64 SKPointArrayToPath64(SKPoint[] points)
             {
                 Path64 path = new Path64();
@@ -234,8 +255,6 @@ namespace AustralianFall.Interfaces
                     result.AddRange(Path64ToSKPointArrayList(path));
                 }
                 return Clipper.Area(commonArea);
-
-                //return result;
             }
         }
     }
